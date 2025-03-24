@@ -1,3 +1,5 @@
+// server.js
+
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
@@ -8,45 +10,49 @@ const routes = require('./routes');
 const app = express();
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(express.json());
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use('/api', routes);
 
-//Conexión a la base de datos
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+    return next();
+  }
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
+
 const db = mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASS || '',
-    database: process.env.DB_NAME || 'holyfest'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'holifest_db',
 });
 
-//Verificar conexión a la base de datos
 db.connect((err) => {
-    if (err) {
-        console.error('Error conectando a MySQL', err);
-        process.exit(1);
-    }
-    console.log('Conexión a la base de datos establecida');
+  if (err) {
+    console.error('Error conectando a la base de datos: ' + err.stack);
+    return;
+  }
+  console.log('Conectado a la base de datos MySQL');
 });
 
-app.locals.db = db;
-
-// Middleware para manejo de errores
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({
-        status: 'error',
-        message: 'Algo salió mal en el servidor'
-    });
-});
-
-// Puerto de escucha
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en el puerto ${PORT}`);
+  console.log(`Servidor backend y frontend corriendo en el puerto ${PORT}`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`El puerto ${PORT} está en uso. Por favor, intenta con otro puerto.`);
+  } else {
+    console.error(`Error al iniciar el servidor: ${err.message}`);
+  }
 });
