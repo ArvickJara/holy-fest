@@ -112,7 +112,7 @@ router.get('/', async (req, res) => {
     let dataQuery = knex('eventos')
       .select('eventos.*', 'organizacion.nombre as organizacion_nombre')
       .leftJoin('organizacion', 'eventos.organizacion_id', 'organizacion.id')
-      .orderBy('eventos.fecha_hora', 'desc');
+      .orderBy('eventos.id', 'desc');
       
     dataQuery = applyFilters(dataQuery, filters);
     dataQuery = dataQuery.limit(limit).offset(offset);

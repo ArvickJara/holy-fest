@@ -19,3 +19,9 @@ dist/
 
 # Windows system files
 Thumbs.db
+
+# image files
+public/uploads/eventos/*.jpg
+public/uploads/eventos/*.jpeg
+public/uploads/eventos/*.png
+public/uploads/eventos/*.gif
