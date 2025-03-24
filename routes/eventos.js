@@ -26,7 +26,6 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  // Aceptar solo imágenes
   if (file.mimetype.startsWith('image/')) {
     cb(null, true);
   } else {
@@ -34,8 +33,8 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ 
-  storage, 
+const upload = multer({
+  storage,
   fileFilter,
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB máximo
@@ -113,39 +112,27 @@ router.get('/', async (req, res) => {
       .select('eventos.*', 'organizacion.nombre as organizacion_nombre')
       .leftJoin('organizacion', 'eventos.organizacion_id', 'organizacion.id')
       .orderBy('eventos.id', 'desc');
-      
+
     dataQuery = applyFilters(dataQuery, filters);
     dataQuery = dataQuery.limit(limit).offset(offset);
 
     const eventos = await dataQuery;
 
-    // Diagnosticar e imprimir el primer evento para depuración
-    if (eventos.length > 0) {
-      console.log('Muestra de datos para diagnóstico:');
-      console.log(`Tipo de imagenes: ${typeof eventos[0].imagenes}`);
-      console.log(`Valor de imagenes: ${eventos[0].imagenes}`);
-    }
-
     // Convertir el campo imágenes de JSON string a objeto
     const eventosFormateados = eventos.map(evento => {
       if (typeof evento.imagenes === 'string') {
         try {
-          // Eliminar caracteres de escape u otros problemas potenciales
           const imagenLimpia = evento.imagenes.replace(/\\/g, '');
-          // Intentar parsear el JSON
           evento.imagenes = JSON.parse(imagenLimpia);
-          
-          // Si resulta un string después del parseo, intentar parsear de nuevo
+
           if (typeof evento.imagenes === 'string') {
             evento.imagenes = JSON.parse(evento.imagenes);
           }
         } catch (e) {
           console.error(`Error al parsear imagenes para evento ${evento.id}:`, e);
           console.error('Contenido del campo imagenes:', evento.imagenes);
-          // Si hay error al parsear, verificar si es un formato específico
           if (evento.imagenes && evento.imagenes.startsWith('[') && evento.imagenes.endsWith(']')) {
             try {
-              // Alternativa: usar eval en este caso específico (con precaución)
               const arrayStr = evento.imagenes.replace(/"/g, '"').replace(/'/g, '"');
               evento.imagenes = JSON.parse(arrayStr);
             } catch (innerError) {
@@ -157,10 +144,9 @@ router.get('/', async (req, res) => {
           }
         }
       } else if (!Array.isArray(evento.imagenes)) {
-        // Si no es un string ni un array, inicializarlo como array vacío
         evento.imagenes = [];
       }
-      
+
       return evento;
     });
 
@@ -190,34 +176,28 @@ router.get('/:id', async (req, res) => {
       .leftJoin('organizacion', 'eventos.organizacion_id', 'organizacion.id')
       .where('eventos.id', id)
       .first();
-      
+
     if (!evento) {
       return res.status(404).json({ error: 'Evento no encontrado' });
     }
 
-    // Diagnosticar los datos recibidos
     console.log(`Evento ID ${id} - tipo de imagenes: ${typeof evento.imagenes}`);
     console.log(`Evento ID ${id} - valor de imagenes: ${evento.imagenes}`);
 
-    // Convertir el campo imágenes de JSON string a objeto
     if (typeof evento.imagenes === 'string') {
       try {
-        // Limpiar posibles caracteres problemáticos
         const imagenLimpia = evento.imagenes.replace(/\\/g, '');
         evento.imagenes = JSON.parse(imagenLimpia);
-        
-        // Si sigue siendo string después del primer parseo, intentar nuevamente
+
         if (typeof evento.imagenes === 'string') {
           evento.imagenes = JSON.parse(evento.imagenes);
         }
       } catch (e) {
         console.error(`Error al parsear imagenes para evento ID ${id}:`, e);
         console.error('Contenido del campo imagenes:', evento.imagenes);
-        
-        // Si hay error al parsear, intentar identificar si es un patrón específico
+
         if (evento.imagenes && evento.imagenes.startsWith('[') && evento.imagenes.endsWith(']')) {
           try {
-            // Alternativa para casos específicos
             const arrayStr = evento.imagenes.replace(/"/g, '"').replace(/'/g, '"');
             evento.imagenes = JSON.parse(arrayStr);
           } catch (innerError) {
@@ -229,7 +209,6 @@ router.get('/:id', async (req, res) => {
         }
       }
     } else if (!Array.isArray(evento.imagenes)) {
-      // Si no es string ni array, inicializarlo como vacío
       evento.imagenes = [];
     }
 
@@ -244,12 +223,12 @@ router.post('/', async (req, res) => {
   const { nombre, descripcion, latitud, longitud, fecha_hora, organizacion_id } = req.body;
   try {
     const result = await knex('eventos').insert({
-      nombre, 
-      descripcion, 
-      latitud, 
-      longitud, 
-      fecha_hora, 
-      imagenes: '[]',  // Inicialmente un array vacío
+      nombre,
+      descripcion,
+      latitud,
+      longitud,
+      fecha_hora,
+      imagenes: '[]',
       organizacion_id
     });
 
@@ -266,19 +245,19 @@ router.put('/:id', async (req, res) => {
   const { nombre, descripcion, latitud, longitud, fecha_hora, organizacion_id } = req.body;
   try {
     const eventoExistente = await knex('eventos').where('id', id).first();
-    
+
     if (!eventoExistente) {
       return res.status(404).json({ error: 'Evento no encontrado' });
     }
-    
+
     const updatedEvento = await knex('eventos')
       .where('id', id)
-      .update({ 
-        nombre, 
-        descripcion, 
-        latitud, 
-        longitud, 
-        fecha_hora, 
+      .update({
+        nombre,
+        descripcion,
+        latitud,
+        longitud,
+        fecha_hora,
         organizacion_id
       });
 
@@ -291,12 +270,17 @@ router.put('/:id', async (req, res) => {
 // Ruta para subir imágenes a un evento
 router.post('/:id/imagenes', upload.array('imagenes', 10), async (req, res) => {
   const { id } = req.params;
-  
+
   try {
-    // Verificar que el evento existe
+    console.log('Archivos recibidos:', req.files ? req.files.length : 'ninguno');
+    if (req.files) {
+      req.files.forEach((file, index) => {
+        console.log(`Archivo ${index + 1}:`, file.originalname, file.path);
+      });
+    }
+
     const evento = await knex('eventos').where('id', id).first();
     if (!evento) {
-      // Eliminar archivos subidos si el evento no existe
       if (req.files && req.files.length > 0) {
         req.files.forEach(file => {
           fs.unlinkSync(file.path);
@@ -305,15 +289,12 @@ router.post('/:id/imagenes', upload.array('imagenes', 10), async (req, res) => {
       return res.status(404).json({ error: 'Evento no encontrado' });
     }
 
-    // Obtener imágenes actuales
     let imagenes = [];
     try {
       if (evento.imagenes) {
-        // Si es una cadena, intentar parsearlo
         if (typeof evento.imagenes === 'string') {
           imagenes = JSON.parse(evento.imagenes);
-        } 
-        // Si ya es un array, usarlo directamente
+        }
         else if (Array.isArray(evento.imagenes)) {
           imagenes = evento.imagenes;
         }
@@ -325,42 +306,54 @@ router.post('/:id/imagenes', upload.array('imagenes', 10), async (req, res) => {
 
     console.log('Imágenes actuales:', imagenes);
 
-    // Añadir nuevas imágenes
     if (req.files && req.files.length > 0) {
       const nuevasImagenes = req.files.map(file => {
-        // Asegurar que la ruta esté correctamente formateada para acceso web
         return `/uploads/eventos/${path.basename(file.path)}`;
       });
-      
+
       console.log('Nuevas imágenes a añadir:', nuevasImagenes);
-      
+
       imagenes = [...imagenes, ...nuevasImagenes];
-      
-      // Actualizar el evento con las nuevas imágenes
+
       await knex('eventos')
         .where('id', id)
         .update({ imagenes: JSON.stringify(imagenes) });
-      
+
       console.log('Imágenes guardadas en DB:', JSON.stringify(imagenes));
     }
 
-    // Verificar que las imágenes se actualizaron correctamente
+    // Obtenemos el evento actualizado y aseguramos que las imágenes se retornen correctamente
     const eventoActualizado = await knex('eventos').where('id', id).first();
     let imagenesActualizadas = [];
     
     try {
-      imagenesActualizadas = JSON.parse(eventoActualizado.imagenes || '[]');
+      if (eventoActualizado.imagenes) {
+        if (typeof eventoActualizado.imagenes === 'string') {
+          const imagenLimpia = eventoActualizado.imagenes.replace(/\\/g, '');
+          imagenesActualizadas = JSON.parse(imagenLimpia);
+          
+          // Si sigue siendo string después del parseo
+          if (typeof imagenesActualizadas === 'string') {
+            imagenesActualizadas = JSON.parse(imagenesActualizadas);
+          }
+        } else if (Array.isArray(eventoActualizado.imagenes)) {
+          imagenesActualizadas = eventoActualizado.imagenes;
+        }
+      }
     } catch (e) {
       console.error('Error al parsear imágenes actualizadas:', e);
+      console.error('Valor recibido:', eventoActualizado.imagenes);
+      imagenesActualizadas = [];
     }
 
-    res.json({ 
-      message: 'Imágenes subidas con éxito', 
-      imagenes: imagenesActualizadas 
+    console.log('Imágenes actualizadas para respuesta:', imagenesActualizadas);
+
+    res.json({
+      message: 'Imágenes subidas con éxito',
+      imagenes: imagenesActualizadas
     });
   } catch (err) {
     console.error('Error en la subida de imágenes:', err);
-    // En caso de error, eliminar archivos subidos
     if (req.files && req.files.length > 0) {
       req.files.forEach(file => {
         if (fs.existsSync(file.path)) {
@@ -375,36 +368,63 @@ router.post('/:id/imagenes', upload.array('imagenes', 10), async (req, res) => {
 // Ruta para eliminar imágenes de un evento
 router.delete('/:id/imagenes', async (req, res) => {
   const { id } = req.params;
-  const { imagenes } = req.body; // Array de rutas a eliminar
-  
+  const { imagenes } = req.body;
+
+  console.log('Solicitud para eliminar imágenes:', imagenes);
+
   if (!imagenes || !Array.isArray(imagenes) || imagenes.length === 0) {
     return res.status(400).json({ error: 'Debe proporcionar un array de rutas de imágenes a eliminar' });
   }
 
   try {
-    // Verificar que el evento existe
     const evento = await knex('eventos').where('id', id).first();
     if (!evento) {
       return res.status(404).json({ error: 'Evento no encontrado' });
     }
 
-    // Obtener imágenes actuales
     let imagenesActuales = [];
     try {
-      imagenesActuales = evento.imagenes ? JSON.parse(evento.imagenes) : [];
+      if (typeof evento.imagenes === 'string') {
+        imagenesActuales = JSON.parse(evento.imagenes);
+      } else if (Array.isArray(evento.imagenes)) {
+        imagenesActuales = evento.imagenes;
+      }
     } catch (e) {
+      console.error('Error al parsear imágenes existentes para eliminar:', e);
       imagenesActuales = [];
     }
 
-    // Filtrar imágenes que se van a eliminar
-    const imagenesAEliminar = imagenesActuales.filter(ruta => imagenes.includes(ruta));
-    const imagenesRestantes = imagenesActuales.filter(ruta => !imagenes.includes(ruta));
+    console.log('Imágenes actuales antes de eliminar:', imagenesActuales);
+    
+    // Corregimos la lógica de filtrado para identificar las imágenes a eliminar
+    const rutasAEliminar = imagenes;
+    const imagenesAEliminar = [];
+    const imagenesRestantes = [];
+
+    // Verificar cada imagen actual si debe ser eliminada o conservada
+    imagenesActuales.forEach(ruta => {
+      // Comprobar si la ruta actual está en la lista de rutas a eliminar
+      if (rutasAEliminar.includes(ruta)) {
+        imagenesAEliminar.push(ruta);
+      } else {
+        imagenesRestantes.push(ruta);
+      }
+    });
+
+    console.log('Imágenes a eliminar:', imagenesAEliminar);
+    console.log('Imágenes restantes:', imagenesRestantes);
 
     // Eliminar archivos físicos
     imagenesAEliminar.forEach(ruta => {
-      const rutaCompleta = path.join(__dirname, '..', 'public', ruta);
+      // Eliminar slash inicial si existe para la construcción de la ruta
+      const rutaSinSlash = ruta.startsWith('/') ? ruta.substring(1) : ruta;
+      const rutaCompleta = path.join(__dirname, '..', 'public', rutaSinSlash);
+      console.log('Intentando eliminar archivo:', rutaCompleta);
       if (fs.existsSync(rutaCompleta)) {
         fs.unlinkSync(rutaCompleta);
+        console.log('Archivo eliminado:', rutaCompleta);
+      } else {
+        console.log('Archivo no encontrado:', rutaCompleta);
       }
     });
 
@@ -413,11 +433,12 @@ router.delete('/:id/imagenes', async (req, res) => {
       .where('id', id)
       .update({ imagenes: JSON.stringify(imagenesRestantes) });
 
-    res.json({ 
-      message: 'Imágenes eliminadas con éxito', 
-      imagenes: imagenesRestantes 
+    res.json({
+      message: 'Imágenes eliminadas con éxito',
+      imagenes: imagenesRestantes
     });
   } catch (err) {
+    console.error('Error eliminando imágenes:', err);
     res.status(500).json({ error: 'Error eliminando imágenes', details: err.message || err });
   }
 });
@@ -425,13 +446,11 @@ router.delete('/:id/imagenes', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    // Obtener el evento para conocer sus imágenes
     const evento = await knex('eventos').where('id', id).first();
     if (!evento) {
       return res.status(404).json({ error: 'Evento no encontrado' });
     }
 
-    // Eliminar archivos físicos asociados
     try {
       const imagenes = evento.imagenes ? JSON.parse(evento.imagenes) : [];
       imagenes.forEach(ruta => {
@@ -444,7 +463,6 @@ router.delete('/:id', async (req, res) => {
       console.error('Error eliminando archivos de imágenes:', e);
     }
 
-    // Eliminar el evento de la base de datos
     const deletedEvento = await knex('eventos').where('id', id).del();
     res.json({ message: 'Evento eliminado' });
   } catch (err) {
