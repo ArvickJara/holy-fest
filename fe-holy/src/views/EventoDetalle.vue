@@ -83,7 +83,9 @@
         <div class="evento-ubicacion" v-if="evento.latitud && evento.longitud">
           <h2>Ubicación</h2>
           <p>Coordenadas: {{ evento.latitud }}, {{ evento.longitud }}</p>
-          <div id="evento-mapa" ref="mapaContainer" class="mapa-container"></div>
+          <button @click="mostrarMapa" class="btn-mostrar-mapa">Ver mapa completo</button>
+          
+          <div id="mapa-leaflet" class="mapa-container-fullscreen" style="display: none;"></div>
         </div>
       </div>
     </div>
@@ -277,34 +279,121 @@ export default {
     
     // Inicialización simplificada del mapa
     const initMap = (lat, lng) => {
-      if (map) map.remove();
-      
-      const container = mapaContainer.value;
-      if (!container) return;
+      console.log("Inicializando mapa con coordenadas:", lat, lng);
       
       try {
-        // Asegurar dimensiones del contenedor
-        container.style.height = '400px';
-        container.style.width = '100%';
+        // Eliminar mapa anterior si existe
+        if (map) {
+          map.remove();
+          map = null;
+          console.log("Mapa anterior eliminado");
+        }
         
-        // Crear el mapa con las coordenadas proporcionadas
-        map = L.map(container).setView([parseFloat(lat), parseFloat(lng)], 15);
+        const container = document.getElementById('mapa-leaflet');
+        if (!container) {
+          console.error("Contenedor del mapa no encontrado");
+          return;
+        }
         
-        // Añadir capa de mapa
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        // Configurar el contenedor para pantalla completa
+        container.style.position = 'fixed';
+        container.style.top = '0';
+        container.style.left = '0';
+        container.style.width = '100vw';
+        container.style.height = '100vh';
+        container.style.zIndex = '9999';
+        container.style.backgroundColor = '#f9f9f9';
         
-        // Añadir marcador
-        L.marker([parseFloat(lat), parseFloat(lng)])
-          .addTo(map)
-          .bindPopup(evento.value.nombre)
-          .openPopup();
-        
-        // Forzar actualización del tamaño del mapa
-        setTimeout(() => map.invalidateSize(), 300);
+        // Esperar un momento para asegurar que el contenedor esté visible
+        setTimeout(() => {
+          try {
+            console.log("Creando objeto mapa");
+            
+            // Convertir coordenadas a números
+            const latitude = parseFloat(lat);
+            const longitude = parseFloat(lng);
+            
+            if (isNaN(latitude) || isNaN(longitude)) {
+              console.error("Coordenadas inválidas", lat, lng);
+              return;
+            }
+            
+            // Crear un nuevo mapa con un ID único
+            const mapId = 'leaflet-map-' + Date.now();
+            container.id = mapId;
+            
+            // Crear el objeto mapa
+            map = L.map(mapId).setView([latitude, longitude], 15);
+            
+            // Añadir capa de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 19,
+              attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Crear un ícono personalizado usando una URL absoluta
+            const customIcon = L.icon({
+              iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+              iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+              shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+              iconSize: [25, 41],     // tamaño del ícono
+              iconAnchor: [12, 41],   // punto del ícono que corresponderá a la ubicación del marcador
+              popupAnchor: [1, -34],  // punto desde donde se debe abrir el popup
+              shadowSize: [41, 41]    // tamaño de la sombra
+            });
+            
+            // Alternativa: Usar un marcador de círculo
+            // Descomentar si prefieres un marcador circular en lugar del pin
+            /*
+            const circleMarker = L.circleMarker([latitude, longitude], {
+              radius: 8,
+              fillColor: "#ff7800",
+              color: "#000",
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.8
+            }).addTo(map);
+            
+            circleMarker.bindPopup(evento.value.nombre || 'Ubicación del evento').openPopup();
+            */
+            
+            // Añadir marcador con el ícono personalizado
+            L.marker([latitude, longitude], { icon: customIcon })
+              .addTo(map)
+              .bindPopup(evento.value.nombre || 'Ubicación del evento')
+              .openPopup();
+            
+            // Añadir botón de cierre
+            const closeBtn = document.createElement('div');
+            closeBtn.className = 'leaflet-close-btn';
+            closeBtn.innerHTML = '×';
+            closeBtn.onclick = function() {
+              container.style.display = 'none';
+            };
+            container.appendChild(closeBtn);
+            
+            // Forzar actualización del mapa
+            map.invalidateSize(true);
+            
+            console.log("Mapa creado exitosamente");
+          } catch (err) {
+            console.error("Error al crear el mapa:", err);
+          }
+        }, 100);
       } catch (error) {
-        console.error("Error al inicializar mapa:", error);
+        console.error("Error en initMap:", error);
+      }
+    };
+    
+    // Variable para controlar la visibilidad del mapa
+    const mapaVisible = ref(false);
+    
+    // Función para mostrar el mapa
+    const mostrarMapa = () => {
+      const container = document.getElementById('mapa-leaflet');
+      if (container) {
+        container.style.display = 'block';
+        initMap(evento.value.latitud, evento.value.longitud);
       }
     };
     
@@ -340,7 +429,9 @@ export default {
       nextImagen,
       prevImagen,
       setImagen,
-      mapaContainer
+      mapaContainer,
+      mostrarMapa,
+      mapaVisible
     };
   }
 }
@@ -517,24 +608,62 @@ export default {
   background-color: #f5f5f5;
 }
 
+.mapa-container-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: #f9f9f9;
+}
+
+.btn-mostrar-mapa {
+  display: block;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin-top: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-mostrar-mapa:hover {
+  background-color: var(--primary-hover);
+}
+
+.leaflet-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 10000;
+  cursor: pointer;
+}
+
+.leaflet-close-btn:hover {
+  background-color: #f5f5f5;
+}
+
 /* Estilos adicionales para asegurar que el mapa se visualice correctamente */
 :deep(.leaflet-container) {
   height: 100% !important;
-  width: 100%;
-  z-index: 10;
+  width: 100% !important;
 }
 
 :deep(.leaflet-control-container) {
-  z-index: 20;
-}
-
-:deep(.leaflet-popup-content-wrapper) {
-  border-radius: 8px;
-}
-
-:deep(.leaflet-popup-content) {
-  margin: 8px 12px;
-  line-height: 1.4;
+  z-index: 1001;
 }
 
 /* Corrige estilos globales para asegurar que se vea el mapa */
