@@ -19,15 +19,23 @@ app.use(express.json());
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+// Añadir logging para API
+app.use('/api', (req, res, next) => {
+  console.log(`API Request: ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 app.use('/api', routes);
 
-app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+app.use(express.static(path.join(__dirname, 'fe-holy', 'dist')));
 
+// Mejorar manejador de rutas frontend para SPA
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/public')) {
     return next();
   }
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+  console.log('Frontend request:', req.path);
+  res.sendFile(path.join(__dirname, 'fe-holy', 'dist', 'index.html'));
 });
 
 const db = mysql.createConnection({
