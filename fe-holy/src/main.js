@@ -4,12 +4,18 @@ import App from './App.vue'
 import OrganizacionesLista from './views/OrganizacionesLista.vue'
 import EventosOrganizacion from './views/EventosOrganizacion.vue'
 import EventoDetalle from './views/EventoDetalle.vue'
+import Home from './views/Home.vue'
 import './assets/main.css'
 
 const routes = [
   {
     path: '/',
-    name: 'organizaciones',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/organizaciones',
+    name: 'organizaciones-lista',
     component: OrganizacionesLista
   },
   {
