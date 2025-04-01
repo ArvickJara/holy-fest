@@ -5,7 +5,7 @@
       <nav class="main-nav">
         <router-link to="/" class="nav-link">Inicio</router-link>
         <router-link to="/organizaciones" class="nav-link">Organizaciones</router-link>
-        <router-link to="/eventos" class="nav-link">Eventos</router-link>
+        <!-- <router-link to="/eventos" class="nav-link">Eventos</router-link> -->
       </nav>
     </header>
     <main class="main-content">

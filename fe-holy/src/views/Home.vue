@@ -15,7 +15,7 @@
             <p class="description">
                 Una tradición centenaria que une fe, cultura y devoción.
                 Descubre los eventos y actividades organizados por las diferentes
-                instituciones de nuestra hermosa ciudad.
+                instituciones de nuestra hermosa ciudad de <strong>Huánuco</strong>.
             </p>
             <router-link to="/organizaciones">
                 <button class="action-button">
