@@ -3,6 +3,7 @@ exports.up = function (knex) {
         table.increments('id').primary().unsigned();
         table.string('nombre', 255).notNullable();
         table.text('descripcion').nullable();
+        table.text('tipo').nullable();
         table.timestamps(true, true);
     });
 };

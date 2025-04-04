@@ -28,12 +28,23 @@
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500;600&display=swap');
+
+@font-face {
+    font-family: 'lostaMasta';
+    src: url('/fonts/lostamasta.woff2') format('woff2'),
+        url('/fonts/lostamasta.woff') format('woff'),
+        url('/fonts/lostamasta.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 .home-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    background-color: #f3f4f6;
+    min-height: 80vh;
+    background-color: #f6f6f6;
     font-family: 'Lora', serif;
 }
 
@@ -67,12 +78,11 @@
 .main-title {
     font-size: 2.25rem;
     font-weight: 700;
-    color: #581c87;
+    color: #8A527B;
     margin-bottom: 1.5rem;
-    font-family: 'Playfair Display', serif;
-    /* Tipografía elegante para títulos */
+    font-family: 'lostaMasta', 'Playfair Display', serif;
     letter-spacing: -0.02em;
-    /* Espaciado de letras ligeramente condensado */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .description {
@@ -86,7 +96,7 @@
 }
 
 .action-button {
-    background-color: #6b21a8;
+    background-color: #8A527B;
     color: white;
     font-weight: 700;
     padding: 0.75rem 1.5rem;
@@ -102,7 +112,7 @@
 }
 
 .action-button:hover {
-    background-color: #7e22ce;
+    background-color: #7E406E;
     /* purple-700 equivalente */
     transform: scale(1.05);
 }

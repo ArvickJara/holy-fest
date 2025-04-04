@@ -27,19 +27,49 @@
         <ul class="timeline">
           <li v-for="(evento, index) in eventos" :key="evento.id" :style="`--accent-color:${getColor(index)}`">
             <div class="date">{{ formatDate(evento.fecha_hora) }}</div>
-            <div class="title">{{ evento.nombre }}</div>
+            <div class="title">
+              <strong>{{ evento.nombre }}</strong>
+              <button v-if="evento.latitud && evento.longitud" class="map-btn" @click.stop="abrirMapa(evento)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+                  <circle cx="12" cy="9" r="3"></circle>
+                </svg>
+              </button>
+            </div>
             <div class="descr">{{ evento.descripcion }}</div>
           </li>
         </ul>
+      </div>
+    </div>
+    <div v-if="showModal" class="map-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>{{ eventoSeleccionado?.nombre }}</h3>
+          <button class="close-modal" @click="showModal = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <iframe width="100%" height="400" frameborder="0" style="border:0; border-radius: 4px;"
+            :src="`https://maps.google.com/maps?q=${eventoSeleccionado?.latitud},${eventoSeleccionado?.longitud}&z=15&output=embed`"
+            allowfullscreen></iframe>
+
+          <!-- <div class="direccion-info">
+            <p>
+              <strong>Coordenadas:</strong> {{ eventoSeleccionado?.latitud }}, {{ eventoSeleccionado?.longitud }}
+            </p>
+          </div> -->
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, onUnmounted, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 export default {
   name: 'EventosOrganizacion',
@@ -53,6 +83,11 @@ export default {
     const eventos = ref([]);
     const loading = ref(true);
     const error = ref(null);
+
+    const showModal = ref(false);
+    const eventoSeleccionado = ref(null);
+    let map = null;
+    let marker = null;
 
     // Colores para alternar en la línea de tiempo
     const colors = ['#41516C', '#FBCA3E', '#E24A68', '#1B5F8C', '#4CADAD'];
@@ -70,6 +105,43 @@ export default {
       };
 
       return new Date(dateString).toLocaleDateString('es-ES', options);
+    };
+
+    const abrirMapa = (evento) => {
+      eventoSeleccionado.value = evento;
+      showModal.value = true;
+
+      const lat = parseFloat(evento.latitud);
+      const lng = parseFloat(evento.longitud);
+
+      // Validación de coordenadas
+      if (isNaN(lat) || isNaN(lng)) {
+        console.error('Coordenadas inválidas:', evento.latitud, evento.longitud);
+        return;
+      }
+
+      // Mostrar mapa en el siguiente ciclo del DOM
+      setTimeout(() => {
+        if (map) {
+          map.remove(); // Limpiar el mapa existente
+        }
+
+        // Inicializar el mapa
+        map = L.map('evento-mapa').setView([lat, lng], 15);
+
+        // Añadir layer de mapa
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Añadir marcador
+        marker = L.marker([lat, lng]).addTo(map)
+          .bindPopup(evento.nombre)
+          .openPopup();
+
+        // Actualizar el mapa (necesario cuando se muestra en un elemento que estaba oculto)
+        map.invalidateSize();
+      }, 200);
     };
 
     const fetchEventos = async () => {
@@ -100,12 +172,27 @@ export default {
     };
 
     onMounted(() => {
+
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
+      });
+
       if (!organizacionId.value) {
         router.push('/organizaciones');
         return;
       }
 
       fetchEventos();
+    });
+
+    onUnmounted(() => {
+      if (map) {
+        map.remove();
+        map = null;
+      }
     });
 
     return {
@@ -115,7 +202,10 @@ export default {
       error,
       getColor,
       formatDate,
-      fetchEventos
+      fetchEventos,
+      showModal,
+      eventoSeleccionado,
+      abrirMapa
     };
   }
 }
@@ -130,6 +220,96 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.map-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  margin-left: 8px;
+  padding: 4px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.map-btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Estilos para el modal */
+.map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--color);
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.mapa-container {
+  height: 400px;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.direccion-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+
+/* Ajustar título para acomodar el botón de mapa */
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 body {

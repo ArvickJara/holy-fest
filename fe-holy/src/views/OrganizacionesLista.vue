@@ -1,6 +1,27 @@
 <template>
   <div class="organizaciones-container">
-    <h2>Consultar todas las organizaciones que tienen eventos por la Semana Santa</h2>
+    <div class="section-header">
+      <h2 class="title-special">Organizadores de Semana Santa</h2>
+      <p class="subtitle">Descubre las entidades que celebran la Semana Santa con eventos especiales</p>
+    </div>
+
+    <!-- Filtro por tipo -->
+    <div class="filter-container">
+      <span class="filter-label">Filtrar por tipo:</span>
+      <div class="filter-options">
+        <button class="filter-button" :class="{ active: tipoFiltro === 'todos' }" @click="filtrarPorTipo('todos')">
+          Todos
+        </button>
+        <button class="filter-button" :class="{ active: tipoFiltro === 'Municipal' }"
+          @click="filtrarPorTipo('Municipal')">
+          Municipal
+        </button>
+        <button class="filter-button" :class="{ active: tipoFiltro === 'Parroquial' }"
+          @click="filtrarPorTipo('Parroquial')">
+          Parroquial
+        </button>
+      </div>
+    </div>
 
     <!-- Componente de búsqueda -->
     <div class="search-container">
@@ -14,6 +35,7 @@
     <div v-if="loading" class="loading">Cargando organizaciones...</div>
 
     <div v-else-if="error" class="error">
+
       <p>{{ error }}</p>
       <button @click="fetchOrganizaciones">Reintentar</button>
     </div>
@@ -66,13 +88,14 @@ export default {
     const currentPage = ref(1);
     const searchTerm = ref('');
     const searchTimeout = ref(null);
+    const tipoFiltro = ref('todos');
 
-    const fetchOrganizaciones = async (page = 1, search = '') => {
+    const fetchOrganizaciones = async (page = 1, search = '', tipo = 'todos') => {
       loading.value = true;
       error.value = null;
 
       try {
-        const response = await organizacionService.getAll(page, search);
+        const response = await organizacionService.getAll(page, 10, search, tipo);
         organizaciones.value = response.organizaciones;
         pagination.value = response.pagination;
         currentPage.value = page;
@@ -93,6 +116,11 @@ export default {
       searchTimeout.value = setTimeout(() => {
         fetchOrganizaciones(1, searchTerm.value);
       }, 300);
+    };
+
+    const filtrarPorTipo = (tipo) => {
+      tipoFiltro.value = tipo;
+      fetchOrganizaciones(1, searchTerm.value, tipo);
     };
 
     const changePage = (page) => {
@@ -116,8 +144,10 @@ export default {
       loading,
       error,
       searchTerm,
+      tipoFiltro,
       fetchOrganizaciones,
       handleSearch,
+      filtrarPorTipo,
       changePage,
       verEventos
     };
@@ -125,7 +155,120 @@ export default {
 }
 </script>
 
+
+
 <style scoped>
+@font-face {
+  font-family: 'lostaMasta';
+  src: url('/fonts/lostamasta.woff2') format('woff2'),
+    url('/fonts/lostamasta.woff') format('woff'),
+    url('/fonts/lostamasta.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.section-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.title-special {
+  color: #8A527B;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  font-family: 'lostaMasta', 'Playfair Display', serif;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  position: relative;
+}
+
+.title-special::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 60px;
+  background-color: #76AC85;
+  border-radius: 2px;
+}
+
+.subtitle {
+  color: #777;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 1rem auto 1.5rem;
+}
+
+.section-header h2 {
+  color: #4a4a4a;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.section-header h2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 60px;
+  background-color: #76AC85;
+  border-radius: 2px;
+}
+
+.subtitle {
+  color: #777;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0.5rem auto 1.5rem;
+}
+
+/* Estilos para el filtro por tipo */
+.filter-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-label {
+  font-weight: 500;
+  color: #555;
+  margin-right: 10px;
+}
+
+.filter-options {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-button {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+  background-color: #e0e0e0;
+}
+
+.filter-button.active {
+  background-color: #76AC85;
+  color: white;
+  border-color: #76AC85;
+}
+
 .organizaciones-container {
   width: 100%;
 }
@@ -145,7 +288,7 @@ export default {
 }
 
 .search-button {
-  background-color: #4caf50;
+  background-color: #76AC85;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -197,7 +340,7 @@ export default {
 }
 
 .card-footer button {
-  background-color: #4caf50;
+  background-color: #76AC85;
   color: white;
   border: none;
   padding: 8px 15px;

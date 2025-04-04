@@ -4,13 +4,16 @@ const knexConfig = require('../knexfile');
 const knex = require('knex')(knexConfig);
 
 const applyFilters = (query, filters) => {
-  const { nombre, descripcion } = filters;
+  const { nombre, descripcion, tipo } = filters;
 
   if (nombre) {
     query = query.where('nombre', 'like', `%${nombre}%`);
   }
   if (descripcion) {
     query = query.where('descripcion', 'like', `%${descripcion}%`);
+  }
+  if (tipo) {
+    query = query.where('tipo', tipo);
   }
 
   return query;
@@ -32,7 +35,10 @@ router.get('/list', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  let { nombre, descripcion, page = 1, limit = 10 } = req.query;
+  let { nombre, descripcion, tipo, page = 1, limit = 10 } = req.query;
+
+  // Depuración
+  console.log('Parámetros recibidos:', { nombre, descripcion, tipo, page, limit });
 
   page = parseInt(page, 10);
   if (isNaN(page) || page < 1) {
@@ -50,6 +56,7 @@ router.get('/', async (req, res) => {
     const filters = {
       nombre,
       descripcion,
+      tipo
     };
 
     let countQuery = knex('organizacion').count('* as total');
@@ -76,6 +83,7 @@ router.get('/', async (req, res) => {
       },
     });
   } catch (err) {
+    console.error('Error en GET /organizacion:', err);
     res.status(500).json({
       error: 'Error obteniendo las organizaciones',
       details: err.message || err,

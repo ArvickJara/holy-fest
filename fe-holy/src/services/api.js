@@ -29,11 +29,17 @@ async function fetchAPI(endpoint, options = {}) {
 // Servicios para organizaciones
 export const organizacionService = {
   // Obtener todas las organizaciones (paginadas)
-  getAll: (page = 1, limit = 10, search = '') => {
+  getAll: (page = 1, limit = 10, search = '', tipo = 'todos') => {
     const params = new URLSearchParams();
     params.append('page', page);
     params.append('limit', limit);
-    if (search) params.append('nombre', search);
+    if (search) {
+      params.append('nombre', search);
+    }
+
+    if (tipo && tipo !== 'todos') {
+      params.append('tipo', tipo);
+    }
 
     return fetchAPI(`/organizacion?${params.toString()}`);
   },
