@@ -4,10 +4,34 @@
     <main class="main-content">
       <router-view></router-view>
     </main>
-    <footer class="site-footer">
+    <!-- <footer class="site-footer">
       &copy; 2025 LTD | Dircetur Huánuco - Todos los derechos reservados
-    </footer>
+    </footer> -->
   </div>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <!-- Logotipos de colaboradores -->
+      <div class="footer-logos">
+        <a href="https://www.visithuanuco.com/" target="_blank" class="logo-link">
+          <img src="/Visithuanuco.svg" alt="Visita Huánuco" class="footer-logo">
+        </a>
+        <a href="https://udh.sistemasudh.com/carrera/sistemas-e-informatica" target="_blank" class="logo-link">
+          <img src="/SistemasUDH.svg" alt="Sistemas UDH" class="footer-logo">
+        </a>
+        <a href="https://www.regionhuanuco.gob.pe/" target="_blank" class="logo-link">
+          <img src="/Huanucoparaelmundo.svg" alt="Huánuco para el mundo" class="footer-logo">
+        </a>
+        <a href="https://www.facebook.com/dircetur.huanuco/?locale=es_LA" target="_blank" class="logo-link">
+          <img src="/Dircetur_huanuco.svg" alt="Dircetur Huánuco" class="footer-logo">
+        </a>
+      </div>
+
+      <!-- Información de copyright -->
+      <div class="copyright">
+        &copy; 2025 LTD | Dircetur Huánuco - Todos los derechos reservados
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script setup>
@@ -34,10 +58,73 @@ body {
 }
 
 .site-footer {
-  margin-top: 80px;
-  padding: 20px 0;
+  background-color: #3C4048;
+  color: white;
+  padding: 30px 0;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.logo-link {
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.logo-link:hover {
+  opacity: 0.8;
+}
+
+.footer-logo {
+  height: 50px;
+  /* filter: brightness(0) invert(1); */
+  /* Hace que los logos sean blancos */
+  object-fit: contain;
+}
+
+.copyright {
+  font-size: 0.9rem;
+  opacity: 0.8;
   text-align: center;
-  border-top: 1px solid #ddd;
-  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-logos {
+    gap: 20px;
+  }
+
+  .footer-logo {
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-logos {
+    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-logo {
+    height: 35px;
+    margin-bottom: 10px;
+  }
 }
 </style>

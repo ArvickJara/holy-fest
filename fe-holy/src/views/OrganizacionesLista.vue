@@ -183,18 +183,6 @@ export default {
   position: relative;
 }
 
-.title-special::after {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 3px;
-  width: 60px;
-  background-color: #76AC85;
-  border-radius: 2px;
-}
-
 .subtitle {
   color: #777;
   font-size: 1.1rem;
@@ -218,7 +206,7 @@ export default {
   transform: translateX(-50%);
   height: 3px;
   width: 60px;
-  background-color: #76AC85;
+
   border-radius: 2px;
 }
 
@@ -234,7 +222,8 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  justify-content: center;
+  justify-content: flex-start;
+  /* Cambiado de center a flex-start */
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -264,9 +253,9 @@ export default {
 }
 
 .filter-button.active {
-  background-color: #76AC85;
+  background-color: #A74540;
   color: white;
-  border-color: #76AC85;
+  border-color: #bd574f;
 }
 
 .organizaciones-container {
@@ -288,7 +277,7 @@ export default {
 }
 
 .search-button {
-  background-color: #76AC85;
+  background-color: #A74540;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -298,7 +287,7 @@ export default {
 }
 
 .search-button:hover {
-  background-color: #45a049;
+  background-color: #A74540;
 }
 
 .organizaciones-grid {
@@ -340,7 +329,7 @@ export default {
 }
 
 .card-footer button {
-  background-color: #76AC85;
+  background-color: #A74540;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -350,7 +339,7 @@ export default {
 }
 
 .card-footer button:hover {
-  background-color: #45a049;
+  background-color: #6e0d25;
 }
 
 .no-description {

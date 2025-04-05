@@ -117,6 +117,12 @@
     transform: scale(1.05);
 }
 
+.left-section {
+    padding-top: 2rem;
+    /* Espacio superior */
+    width: 100%;
+}
+
 @media (min-width: 768px) {
     .home-container {
         flex-direction: row;

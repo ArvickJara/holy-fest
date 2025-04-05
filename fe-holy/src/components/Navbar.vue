@@ -137,12 +137,14 @@ export default {
 }
 
 .nav-link:hover {
-    color: #76AC85;
+    color: #A74540;
 }
 
 /* Indicador de enlace activo */
 .router-link-active {
-    color: #76AC85;
+    color: #A74540;
+    font-weight: 700;
+    /* Agregado para poner en negrita */
 }
 
 .router-link-active::after {
@@ -152,6 +154,7 @@ export default {
     right: 0;
     bottom: -2px;
     height: 2px;
+
 
     border-radius: 1px;
 }
