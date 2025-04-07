@@ -253,9 +253,9 @@ export default {
 }
 
 .filter-button.active {
-  background-color: #A74540;
+  background-color: #713532;
   color: white;
-  border-color: #bd574f;
+  border-color: #713532;
 }
 
 .organizaciones-container {
@@ -277,7 +277,7 @@ export default {
 }
 
 .search-button {
-  background-color: #A74540;
+  background-color: #713532;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -329,7 +329,7 @@ export default {
 }
 
 .card-footer button {
-  background-color: #A74540;
+  background-color: #713532;
   color: white;
   border: none;
   padding: 8px 15px;

@@ -2,9 +2,7 @@
     <div class="home-container">
         <!-- Lado izquierdo con la imagen -->
         <div class="left-section">
-            <div class="image-container">
-                <img src="/icon-jesus2.png" alt="Jesús de Semana Santa" class="jesus-image" />
-            </div>
+                <img src="/aea.jpeg" alt="Jesús de Semana Santa" class="jesus-image" />
         </div>
 
         <div class="right-section">
@@ -62,8 +60,7 @@
     max-height: 30vh;
     max-width: 90%;
     object-fit: contain;
-    border-radius: 0.5rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+   
     /* shadow-2xl equivalente */
 }
 
@@ -78,7 +75,7 @@
 .main-title {
     font-size: 2.25rem;
     font-weight: 700;
-    color: #8A527B;
+    color: #713532;
     margin-bottom: 1.5rem;
     font-family: 'lostaMasta', 'Playfair Display', serif;
     letter-spacing: -0.02em;
@@ -96,7 +93,7 @@
 }
 
 .action-button {
-    background-color: #8A527B;
+    background-color: #713532;
     color: white;
     font-weight: 700;
     padding: 0.75rem 1.5rem;
@@ -112,7 +109,7 @@
 }
 
 .action-button:hover {
-    background-color: #7E406E;
+    background-color: #7F3936;
     /* purple-700 equivalente */
     transform: scale(1.05);
 }
@@ -130,6 +127,7 @@
 
     .left-section {
         width: 50%;
+        padding: 3rem;
     }
 
     .right-section {

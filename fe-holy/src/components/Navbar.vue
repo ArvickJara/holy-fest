@@ -3,7 +3,7 @@
         <div class="header-container">
             <!-- Logo con enlace a inicio -->
             <router-link to="/" class="logo-container">
-                <img src="/logo-semana-santa.png" alt="Logo de la semana santa" class="logo" />
+                <img src="/logo-semana-santa.png" alt="Logo de la semana santa" class="logo"/>
             </router-link>
 
             <!-- Botón de menú móvil -->
@@ -137,12 +137,12 @@ export default {
 }
 
 .nav-link:hover {
-    color: #A74540;
+    color: #C4193B;
 }
 
 /* Indicador de enlace activo */
 .router-link-active {
-    color: #A74540;
+    color: #713532;
     font-weight: 700;
     /* Agregado para poner en negrita */
 }
