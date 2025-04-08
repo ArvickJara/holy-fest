@@ -15,8 +15,7 @@
     <div v-else class="organizacion-eventos">
       <div class="organizacion-header">
         <h2>Eventos de: {{ organizacion.nombre }}</h2>
-        <!--         <p v-if="organizacion.descripcion">{{ organizacion.descripcion }}</p>
- --> <router-link to="/organizaciones" class="back-btn">← Volver a organizaciones</router-link>
+        <router-link to="/organizaciones" class="back-btn">← Volver a organizaciones</router-link>
       </div>
 
       <div v-if="eventos.length === 0" class="empty-state">
@@ -61,6 +60,18 @@
         </div>
       </div>
     </div>
+    <div v-if="pagination && pagination.totalPages > 1" class="pagination">
+      <button :disabled="pagination.currentPage === 1" @click="changePage(pagination.currentPage - 1)">
+        Anterior
+      </button>
+
+      <span>Página {{ pagination.currentPage }} de {{ pagination.totalPages }}</span>
+
+      <button :disabled="pagination.currentPage === pagination.totalPages"
+        @click="changePage(pagination.currentPage + 1)">
+        Siguiente
+      </button>
+    </div>
   </div>
 </template>
 
@@ -83,6 +94,8 @@ export default {
     const eventos = ref([]);
     const loading = ref(true);
     const error = ref(null);
+    const pagination = ref(null);
+    const currentPage = ref(1);
 
     const showModal = ref(false);
     const eventoSeleccionado = ref(null);
@@ -144,7 +157,7 @@ export default {
       }, 200);
     };
 
-    const fetchEventos = async () => {
+    const fetchEventos = async (page = 1) => {
       loading.value = true;
       error.value = null;
 
@@ -155,7 +168,11 @@ export default {
 
         // Luego obtenemos los eventos filtrados por organizacion_id
         const eventosResponse = await axios.get('http://localhost:5000/api/eventos', {
-          params: { organizacion_id: organizacionId.value }
+          params: {
+            organizacion_id: organizacionId.value,
+            page: page,
+            limit: 10
+          }
         });
 
         // Ordenamos los eventos por fecha (más reciente primero)
@@ -163,12 +180,19 @@ export default {
           new Date(b.fecha_hora) - new Date(a.fecha_hora)
         );
 
+        pagination.value = eventosResponse.data.pagination;
+        currentPage.value = page;
+
       } catch (err) {
         console.error('Error al cargar los eventos:', err);
         error.value = 'No se pudieron cargar los eventos. Por favor, intente de nuevo.';
       } finally {
         loading.value = false;
       }
+    };
+
+    const changePage = (page) => {
+      fetchEventos(page);
     };
 
     onMounted(() => {
@@ -185,7 +209,7 @@ export default {
         return;
       }
 
-      fetchEventos();
+      fetchEventos(1);
     });
 
     onUnmounted(() => {
@@ -205,7 +229,9 @@ export default {
       fetchEventos,
       showModal,
       eventoSeleccionado,
-      abrirMapa
+      abrirMapa,
+      pagination, // Exportar variable de paginación
+      changePage
     };
   }
 }
@@ -220,6 +246,36 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 15px;
+}
+
+.pagination button {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+  background-color: #e0e0e0;
+}
+
+.pagination span {
+  color: #666;
 }
 
 .map-btn {
