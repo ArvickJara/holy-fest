@@ -17,7 +17,7 @@
             <!-- Navegación principal -->
             <nav class="main-nav" :class="{ 'open': menuOpen }">
                 <router-link to="/" class="nav-link" @click="closeMenu">Inicio</router-link>
-                <router-link to="/organizaciones" class="nav-link" @click="closeMenu">Organizaciones</router-link>
+                <router-link to="/semanas" class="nav-link" @click="closeMenu">Semana</router-link>
                 <!-- <router-link to="/eventos" class="nav-link" @click="closeMenu">Eventos</router-link> -->
             </nav>
         </div>
@@ -137,12 +137,12 @@ export default {
 }
 
 .nav-link:hover {
-    color: #C4193B;
+    color: #8C40AC;
 }
 
 /* Indicador de enlace activo */
 .router-link-active {
-    color: #713532;
+    color: #8C40AC;
     font-weight: 700;
     /* Agregado para poner en negrita */
 }

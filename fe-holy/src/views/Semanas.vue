@@ -1,5 +1,8 @@
 <template>
     <div class="semanas-container">
+        <div class="nav-links">
+      <router-link to="/" class="nav-link">« Inicio</router-link>
+    </div>
         <h1 class="main-title">Días de la Semana Santa</h1>
         <p class="description">
             Selecciona un día para ver los eventos y celebraciones específicas de la Semana Santa en Huánuco.
@@ -107,7 +110,7 @@ export default {
 .main-title {
     font-size: 2.25rem;
     font-weight: 700;
-    color: #713532;
+    color: #6A1B9A;
     margin-bottom: 1.5rem;
     font-family: 'lostaMasta', 'Playfair Display', serif;
     letter-spacing: -0.02em;
@@ -185,10 +188,26 @@ export default {
     padding: 1rem;
     font-family: 'lostaMasta', 'Playfair Display', serif;
     font-size: 1.25rem;
-    color: #713532;
+    color: #8C40AC;
     text-align: center;
     margin: 0;
 }
+.nav-links {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
 
 @media (max-width: 768px) {
     .dias-grid {

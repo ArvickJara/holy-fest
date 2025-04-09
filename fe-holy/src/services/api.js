@@ -2,27 +2,22 @@ import axios from 'axios';
 
 const API_URL = 'https://tusantohcoback.sistemasudh.com/api';
 
-// Función genérica para realizar peticiones HTTP
+// Función genérica para realizar peticiones HTTP con axios
 async function fetchAPI(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
   console.log(`Realizando petición a: ${url}`, options);
 
   try {
-    const response = await fetch(url, options);
+    // Usando axios para realizar la solicitud
+    const response = await axios(url, options);
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({
-        error: `Error HTTP: ${response.status}`
-      }));
-      throw new Error(errorData.error || errorData.message || 'Error desconocido');
-    }
-
-    const data = await response.json();
-    console.log(`Respuesta de ${endpoint}:`, data);
-    return data;
+    // Respuesta de la API
+    console.log(`Respuesta de ${endpoint}:`, response.data);
+    return response.data;
   } catch (error) {
-    console.error(`Error en petición a ${endpoint}:`, error);
-    throw error;
+    // Manejo de errores
+    console.error(`Error en petición a ${endpoint}:`, error.response || error);
+    throw error.response?.data || error;
   }
 }
 
@@ -30,18 +25,14 @@ async function fetchAPI(endpoint, options = {}) {
 export const organizacionService = {
   // Obtener todas las organizaciones (paginadas)
   getAll: (page = 1, limit = 10, search = '', tipo = 'todos') => {
-    const params = new URLSearchParams();
-    params.append('page', page);
-    params.append('limit', limit);
-    if (search) {
-      params.append('nombre', search);
-    }
+    const params = {
+      page,
+      limit,
+      nombre: search || undefined,
+      tipo: tipo !== 'todos' ? tipo : undefined,
+    };
 
-    if (tipo && tipo !== 'todos') {
-      params.append('tipo', tipo);
-    }
-
-    return fetchAPI(`/organizacion?${params.toString()}`);
+    return fetchAPI(`/organizacion`, { params });
   },
 
   // Obtener una organización por ID
@@ -59,13 +50,7 @@ export const organizacionService = {
 export const eventoService = {
   // Obtener todos los eventos (con filtros opcionales)
   getAll: (filters = {}) => {
-    const params = new URLSearchParams();
-
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) params.append(key, value);
-    });
-
-    return fetchAPI(`/eventos?${params.toString()}`);
+    return fetchAPI('/eventos', { params: filters });
   },
 
   // Obtener un evento por ID
@@ -78,6 +63,7 @@ export const eventoService = {
 
   // Obtener eventos de una organización específica
   getByOrganizacion: (organizacionId, page = 1, limit = 10) => {
-    return fetchAPI(`/eventos?organizacion_id=${organizacionId}&page=${page}&limit=${limit}`);
+    return fetchAPI(`/eventos`, { params: { organizacion_id: organizacionId, page, limit } });
   }
 };
+  

@@ -78,7 +78,7 @@
 .main-title {
     font-size: 2.25rem;
     font-weight: 700;
-    color: #713532;
+    color: #8C40AC;
     margin-bottom: 1.5rem;
     font-family: 'lostaMasta', 'Playfair Display', serif;
     letter-spacing: -0.02em;
@@ -98,7 +98,7 @@
 }
 
 .action-button {
-    background-color: #713532;
+    background-color: #8C40AC;
     color: white;
     font-weight: 700;
     padding: 0.75rem 1.5rem;
@@ -114,7 +114,7 @@
 }
 
 .action-button:hover {
-    background-color: #7F3936;
+    background-color: #8C40AC;
     /* purple-700 equivalente */
     transform: scale(1.05);
 }

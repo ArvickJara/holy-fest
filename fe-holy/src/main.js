@@ -4,6 +4,7 @@ import App from './App.vue'
 import OrganizacionesLista from './views/OrganizacionesLista.vue'
 import EventosOrganizacion from './views/EventosOrganizacion.vue'
 import EventoDetalle from './views/EventoDetalle.vue'
+import EventoDia from './views/EventoDia.vue'
 import Semanas from './views/Semanas.vue'
 import Home from './views/Home.vue'
 import './assets/main.css'
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/dia/:semanas',
+    name: 'eventodia',
+    component: EventoDia
   },
   {
     path: '/semanas',
