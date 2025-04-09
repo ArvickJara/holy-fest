@@ -3,7 +3,7 @@
         <div class="header-container">
             <!-- Logo con enlace a inicio -->
             <router-link to="/" class="logo-container">
-                <img src="/logo-semana-santa.png" alt="Logo de la semana santa" class="logo"/>
+                <img src="/logo-semana-santa.webp" alt="Logo de la semana santa" class="logo"/>
             </router-link>
 
             <!-- Botón de menú móvil -->

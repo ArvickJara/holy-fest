@@ -2,7 +2,7 @@
     <div class="home-container">
         <!-- Lado izquierdo con la imagen -->
         <div class="left-section">
-                <img src="/aea.jpeg" alt="Jesús de Semana Santa" class="jesus-image" />
+                <img src="/aea.webp" alt="Jesús de Semana Santa" class="jesus-image" />
         </div>
 
         <div class="right-section">
