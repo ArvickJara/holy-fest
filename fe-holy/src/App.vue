@@ -13,11 +13,13 @@
       <!-- Logotipos de colaboradores -->
       <div class="footer-logos">
 
-        <a href="https://udh.sistemasudh.com/carrera/sistemas-e-informatica" target="_blank" class="logo-link">
-          <img src="/Logo SistemasUDHconescudo.png" alt="Sistemas UDH" class="footer-logo logo-destacado">
-        </a>
+
         <a href="https://www.visithuanuco.com/" target="_blank" class="logo-link">
           <img src="/Visithuanuco.svg" alt="Visita Huánuco" class="footer-logo">
+        </a>
+
+        <a href="https://udh.sistemasudh.com/carrera/sistemas-e-informatica" target="_blank" class="logo-link">
+          <img src="/Logo SistemasUDHconescudo.png" alt="Sistemas UDH" class="footer-logo logo-destacado">
         </a>
         <!-- <a href="https://www.regionhuanuco.gob.pe/" target="_blank" class="logo-link">
           <img src="/Huanucoparaelmundo.svg" alt="Huánuco para el mundo" class="footer-logo">
@@ -77,10 +79,13 @@ body {
 
 .footer-logos {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 30px;
   margin-bottom: 25px;
+  overflow-x: auto;
+  padding: 10px 0;
+  width: 100%;
 }
 
 .logo-link {
@@ -127,13 +132,13 @@ body {
 @media (max-width: 480px) {
   .footer-logos {
     gap: 15px;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    padding-bottom: 15px;
   }
 
   .footer-logo {
-    height: 35px;
-    margin-bottom: 10px;
+    height: 30px;
+    margin-bottom: 0px;
   }
 
   .logo-destacado {

@@ -8,7 +8,7 @@
         <div class="right-section">
             <router-link to="/semanas">
                 <button class="action-button">
-                    Vive la Semana Santa
+                    Vivir la Semana Santa
                 </button>
             </router-link>
             <!-- <h1 class="main-title">
@@ -39,12 +39,25 @@
     font-display: swap;
 }
 
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 .home-container {
     display: flex;
     flex-direction: column;
-    min-height: 80vh;
-    background-color: #f6f6f6;
+    /* min-height: 80vh; */
+    background-color: #FFF8F8;
     font-family: 'Lora', serif;
+    border-radius: 12px;
 }
 
 
@@ -98,7 +111,7 @@
 }
 
 .action-button {
-    background-color: #8C40AC;
+    background-color: #693382;
     color: white;
     font-weight: 700;
     padding: 0.75rem 1.5rem;
@@ -108,15 +121,15 @@
     border: none;
     cursor: pointer;
     font-family: 'Lora', serif;
-    /* Mantener consistencia con el resto */
     letter-spacing: 0.03em;
-    /* Ligero espaciado para mejor legibilidad */
+    font-size: 1.25rem;
+
+    animation: bounce 0.8s ease-in-out infinite;
 }
 
 .action-button:hover {
-    background-color: #8C40AC;
-    /* purple-700 equivalente */
-    transform: scale(1.05);
+    background-color: #4F1C51;
+    animation-play-state: paused;
 }
 
 .left-section {

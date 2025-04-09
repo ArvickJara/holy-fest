@@ -3,7 +3,7 @@
         <div class="header-container">
             <!-- Logo con enlace a inicio -->
             <router-link to="/" class="logo-container">
-                <img src="/logo-semana-santa.webp" alt="Logo de la semana santa" class="logo"/>
+                <img src="/logo-semana-santa.webp" alt="Logo de la semana santa" class="logo" />
             </router-link>
 
             <!-- Botón de menú móvil -->
@@ -75,7 +75,7 @@ export default {
 }
 
 .site-header {
-    background-color: #fff;
+    background-color: #FFF8F8;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
