@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://tusantohcoback.sistemasudh.com/api';
 
 // Función genérica para realizar peticiones HTTP
 async function fetchAPI(endpoint, options = {}) {

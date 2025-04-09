@@ -110,12 +110,16 @@ export default {
     };
 
     const formatDate = (dateString) => {
-      const options = {
-        day: 'numeric',
-        month: 'short',
-        hour: '2-digit',
-        minute: '2-digit'
-      };
+      const date = new Date(dateString);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  
+  // Check if the time is exactly 00:00
+  const hasValidTime = !(hours === 0 && minutes === 0);
+  
+  const options = hasValidTime
+    ? { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }
+    : { day: 'numeric', month: 'short' };
 
       return new Date(dateString).toLocaleDateString('es-ES', options);
     };

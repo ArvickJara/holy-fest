@@ -162,7 +162,7 @@ export default {
       }
       
       // Construir la URL completa
-      return `http://localhost:5000/public${path}`;
+      return `http://tusantohcoback.sistemasudh.com/public${path}`;
     };
     
     const formatFecha = (fechaStr) => {
