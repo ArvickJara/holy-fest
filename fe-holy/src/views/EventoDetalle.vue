@@ -152,7 +152,7 @@ export default {
       if (!path) return '';
       
       // Si la ruta ya es absoluta o comienza con http, usarla directamente
-      if (path.startsWith('http') || path.startsWith('//')) {
+      if (path.startsWith('https') || path.startsWith('//')) {
         return path;
       }
       
@@ -162,7 +162,7 @@ export default {
       }
       
       // Construir la URL completa
-      return `http://tusantohcoback.sistemasudh.com/public${path}`;
+      return `https://tusantohcoback.sistemasudh.com/public${path}`;
     };
     
     const formatFecha = (fechaStr) => {
@@ -212,7 +212,7 @@ export default {
         }
         
         // Hacer la petición directamente con fetch
-        const url = `http://tusantohcoback.sistemasudh.com/api/eventos/${id}`;
+        const url = `https://tusantohcoback.sistemasudh.com/api/eventos/${id}`;
         console.log(`Enviando petición a: ${url}`);
         
         const response = await fetch(url);

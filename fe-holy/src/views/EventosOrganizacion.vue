@@ -167,11 +167,11 @@ export default {
 
       try {
         // Primero obtenemos la información de la organización
-        const orgResponse = await axios.get(`http://tusantohcoback.sistemasudh.com/api/organizacion/${organizacionId.value}`);
+        const orgResponse = await axios.get(`https://tusantohcoback.sistemasudh.com/api/organizacion/${organizacionId.value}`);
         organizacion.value = orgResponse.data;
 
         // Luego obtenemos los eventos filtrados por organizacion_id
-        const eventosResponse = await axios.get('http://tusantohcoback.sistemasudh.com/api/eventos', {
+        const eventosResponse = await axios.get('https://tusantohcoback.sistemasudh.com/api/eventos', {
           params: {
             organizacion_id: organizacionId.value,
             page: page,
