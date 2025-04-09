@@ -1,9 +1,9 @@
 <template>
   <div class="organizaciones-container">
-    <div class="section-header">
+    <!-- <div class="section-header">
       <h2 class="title-special">Organizadores de Semana Santa</h2>
       <p class="subtitle">Descubre las entidades que celebran la Semana Santa con eventos especiales</p>
-    </div>
+    </div> -->
 
     <!-- Filtro por tipo -->
     <div class="filter-container">

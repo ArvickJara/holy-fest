@@ -111,15 +111,15 @@ export default {
 
     const formatDate = (dateString) => {
       const date = new Date(dateString);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  
-  // Check if the time is exactly 00:00
-  const hasValidTime = !(hours === 0 && minutes === 0);
-  
-  const options = hasValidTime
-    ? { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }
-    : { day: 'numeric', month: 'short' };
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+
+      // Check if the time is exactly 00:00
+      const hasValidTime = !(hours === 0 && minutes === 0);
+
+      const options = hasValidTime
+        ? { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }
+        : { day: 'numeric', month: 'short' };
 
       return new Date(dateString).toLocaleDateString('es-ES', options);
     };
@@ -365,7 +365,6 @@ export default {
   border-radius: 4px;
 }
 
-/* Ajustar título para acomodar el botón de mapa */
 .title {
   display: flex;
   align-items: center;

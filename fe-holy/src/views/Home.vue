@@ -2,24 +2,25 @@
     <div class="home-container">
         <!-- Lado izquierdo con la imagen -->
         <div class="left-section">
-                <img src="/aea.webp" alt="Jesús de Semana Santa" class="jesus-image" />
+            <img src="/aea.webp" alt="Jesús de Semana Santa" class="jesus-image" />
         </div>
 
         <div class="right-section">
-            <h1 class="main-title">
+            <router-link to="/semanas">
+                <button class="action-button">
+                    Vive la Semana Santa
+                </button>
+            </router-link>
+            <!-- <h1 class="main-title">
                 Semana Santa en Huánuco
-            </h1>
+            </h1> -->
 
             <p class="description">
                 Una tradición centenaria que une fe, cultura y devoción.
                 Descubre los eventos y actividades organizados por las diferentes
                 instituciones de nuestra hermosa ciudad de <strong>Huánuco</strong>.
             </p>
-            <router-link to="/organizaciones">
-                <button class="action-button">
-                    Ver todos los eventos
-                </button>
-            </router-link>
+
         </div>
     </div>
 </template>
@@ -60,8 +61,10 @@
     max-height: 30vh;
     max-width: 90%;
     object-fit: contain;
-   
-    /* shadow-2xl equivalente */
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .right-section {
@@ -85,11 +88,13 @@
 .description {
     font-size: 1.125rem;
     color: #374151;
+    margin-top: 1.5rem;
+    /* Añadido: espacio superior */
     margin-bottom: 2rem;
+    padding-top: 0.5rem;
+    /* Añadido: padding superior */
     font-family: 'Lora', serif;
-    /* Tipografía serif legible para párrafos */
     line-height: 1.6;
-    /* Mejor espaciado entre líneas */
 }
 
 .action-button {
@@ -115,9 +120,12 @@
 }
 
 .left-section {
-    padding-top: 2rem;
-    /* Espacio superior */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 15px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -141,6 +149,9 @@
 
     .description {
         font-size: 1.25rem;
+        margin-top: 2rem;
+        /* Padding superior más grande en pantallas grandes */
+        padding-top: 0.75rem;
     }
 
     .jesus-image {
