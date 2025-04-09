@@ -212,7 +212,7 @@ export default {
         }
         
         // Hacer la petición directamente con fetch
-        const url = `http://localhost:5000/api/eventos/${id}`;
+        const url = `http://tusantohcoback.sistemasudh.com/api/eventos/${id}`;
         console.log(`Enviando petición a: ${url}`);
         
         const response = await fetch(url);
