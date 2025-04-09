@@ -103,7 +103,7 @@ export default {
 .semanas-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
     font-family: 'Lora', serif;
 }
 
@@ -133,8 +133,8 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* Cambiado a 2 columnas fijas */
-    gap: 2rem;
-    margin-top: 2rem;
+
+
     max-width: 1000px;
     /* Para limitar el ancho en pantallas muy grandes */
     margin-left: auto;
