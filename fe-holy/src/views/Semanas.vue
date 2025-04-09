@@ -11,7 +11,6 @@
                 <div class="dia-image-container">
                     <img src="/Domingo1.png" alt="Domingo de Ramos" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Domingo de Ramos</h2>
             </div>
 
             <!-- Lunes Santo -->
@@ -19,7 +18,6 @@
                 <div class="dia-image-container">
                     <img src="/Lunes.png" alt="Lunes Santo" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Lunes Santo</h2>
             </div>
 
             <!-- Martes Santo -->
@@ -27,7 +25,6 @@
                 <div class="dia-image-container">
                     <img src="/martes.png" alt="Martes Santo" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Martes Santo</h2>
             </div>
 
             <!-- Miércoles Santo -->
@@ -35,7 +32,6 @@
                 <div class="dia-image-container">
                     <img src="/miercoles.png" alt="Miércoles Santo" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Miércoles Santo</h2>
             </div>
 
             <!-- Jueves Santo -->
@@ -43,7 +39,6 @@
                 <div class="dia-image-container">
                     <img src="/jueves.png" alt="Jueves Santo" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Jueves Santo</h2>
             </div>
 
             <!-- Viernes Santo -->
@@ -51,7 +46,6 @@
                 <div class="dia-image-container">
                     <img src="/viernes.png" alt="Viernes Santo" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Viernes Santo</h2>
             </div>
 
             <!-- Sábado Santo -->
@@ -59,7 +53,6 @@
                 <div class="dia-image-container">
                     <img src="/sabado.png" alt="Sábado Santo" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Sábado Santo</h2>
             </div>
 
             <!-- Domingo de Resurrección -->
@@ -67,7 +60,6 @@
                 <div class="dia-image-container">
                     <img src="/Domingo2.png" alt="Domingo de Resurrección" class="dia-image" />
                 </div>
-                <h2 class="dia-title">Domingo de Resurrección</h2>
             </div>
         </div>
     </div>
@@ -136,18 +128,24 @@ export default {
 
 .dias-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    /* Cambiado a 2 columnas fijas */
     gap: 2rem;
     margin-top: 2rem;
+    max-width: 1000px;
+    /* Para limitar el ancho en pantallas muy grandes */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .dia-card {
-    background-color: #ffffff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 
 .dia-card:hover {
@@ -156,8 +154,13 @@ export default {
 }
 
 .dia-image-container {
-    height: 200px;
+    height: auto;
+    /* Cambiado de height fijo a auto */
     overflow: hidden;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dia-image {
@@ -167,8 +170,15 @@ export default {
     transition: transform 0.5s ease;
 }
 
-.dia-card:hover .dia-image {
-    transform: scale(1.05);
+.dia-image {
+    width: 100%;
+    height: auto;
+    /* Cambiado para mantener proporciones originales */
+    object-fit: contain;
+    /* Cambiado de cover a contain */
+    transition: transform 0.5s ease;
+    max-height: 300px;
+    /* Limitar altura máxima para consistencia */
 }
 
 .dia-title {
@@ -180,15 +190,16 @@ export default {
     margin: 0;
 }
 
-/* Media queries para responsividad */
 @media (max-width: 768px) {
     .dias-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: 1fr;
         gap: 1.5rem;
+        max-width: 500px;
     }
 
-    .dia-image-container {
-        height: 180px;
+    .dia-image {
+        max-height: 250px;
+        /* Ajustar para tablets */
     }
 
     .main-title {
@@ -198,12 +209,15 @@ export default {
 
 @media (max-width: 480px) {
     .dias-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1rem;
+        gap: 1.25rem;
     }
 
     .dia-image-container {
-        height: 150px;
+        height: 180px;
+    }
+
+    .dia-image {
+        max-height: 220px;
     }
 
     .dia-title {
