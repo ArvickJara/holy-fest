@@ -16,7 +16,7 @@
           <img src="/Visithuanuco.svg" alt="Visita Huánuco" class="footer-logo">
         </a>
         <a href="https://udh.sistemasudh.com/carrera/sistemas-e-informatica" target="_blank" class="logo-link">
-          <img src="/Logo SistemasUDHconescudo.png" alt="Sistemas UDH" class="footer-logo">
+          <img src="/Logo SistemasUDHconescudo.png" alt="Sistemas UDH" class="footer-logo logo-destacado">
         </a>
         <!-- <a href="https://www.regionhuanuco.gob.pe/" target="_blank" class="logo-link">
           <img src="/Huanucoparaelmundo.svg" alt="Huánuco para el mundo" class="footer-logo">
@@ -62,7 +62,7 @@ body {
   color: white;
   padding: 30px 0;
   width: 100%;
-  margin-top: 40px;
+
 }
 
 .footer-content {
@@ -104,6 +104,10 @@ body {
   text-align: center;
 }
 
+.logo-destacado {
+  height: 70px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .footer-logos {
@@ -112,6 +116,10 @@ body {
 
   .footer-logo {
     height: 40px;
+  }
+
+  .logo-destacado {
+    height: 55px;
   }
 }
 
@@ -125,6 +133,10 @@ body {
   .footer-logo {
     height: 35px;
     margin-bottom: 10px;
+  }
+
+  .logo-destacado {
+    height: 50px;
   }
 }
 </style>

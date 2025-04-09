@@ -1,12 +1,12 @@
 <template>
     <div class="semanas-container">
         <div class="nav-links">
-      <router-link to="/" class="nav-link">« Inicio</router-link>
-    </div>
-        <h1 class="main-title">Días de la Semana Santa</h1>
+            <router-link to="/" class="nav-link">« Inicio</router-link>
+        </div>
+        <!-- <h1 class="main-title">Días de la Semana Santa</h1>
         <p class="description">
             Selecciona un día para ver los eventos y celebraciones específicas de la Semana Santa en Huánuco.
-        </p>
+        </p> -->
 
         <div class="dias-grid">
             <!-- Domingo de Ramos -->
@@ -192,20 +192,21 @@ export default {
     text-align: center;
     margin: 0;
 }
+
 .nav-links {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .nav-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .nav-link:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 
