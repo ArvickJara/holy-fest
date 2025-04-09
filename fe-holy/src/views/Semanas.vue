@@ -1,8 +1,8 @@
 <template>
     <div class="semanas-container">
-        <div class="nav-links">
+        <!-- <div class="nav-links">
             <router-link to="/" class="nav-link">« Inicio</router-link>
-        </div>
+        </div> -->
         <!-- <h1 class="main-title">Días de la Semana Santa</h1>
         <p class="description">
             Selecciona un día para ver los eventos y celebraciones específicas de la Semana Santa en Huánuco.
