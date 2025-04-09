@@ -16,15 +16,9 @@ exports.seed = async function (knex) {
     },
     {
       id: 3,
-      nombre: 'Asociación de Jóvenes',
-      descripcion: 'Grupo juvenil enfocado en realizar eventos recreativos y sociales para la integración comunitaria.',
-      tipo: 'Parroquial'
-    },
-    {
-      id: 4,
-      nombre: 'Parroquia Santa María',
-      descripcion: 'Comunidad religiosa que organiza celebraciones y eventos durante la Semana Santa.',
-      tipo: 'Parroquial'
+      nombre: 'MUNICIPALIDAD PROVINCIAL DOS DE MAYO – HUÁNUCO',
+      descripcion: 'Brindando servicios de calidad, mejorando el nivel de vida y bienestar de la población rural y urbana de la provincia de dos de mayo, con equidad, honestidad lealtad, transparencia y justicia social.',
+      tipo: 'Municipal'
     }
   ]);
 };

@@ -290,5 +290,177 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
 
+
+    {
+      nombre: 'Santa Misa en honor a la Virgen de los Dolores',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-11 07:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Vía Crucis por el perímetro de la parroquia',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-11 08:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'Bendición de las palmas y Celebración Eucarística',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-13 07:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Solemne procesión del Señor del Triunfo de la Parroquia San Sebastián hacia la Catedral',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-13 15:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'Celebración Eucarística y confesiones',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-14 19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'Misa Crismal en la Catedral (Clero Diocesano y Religioso) Atención zona rural Capellanía de Chinchavito',
+      latitud: -9.92856109082845, 
+      longitud: -76.239459675014,
+      fecha_hora: '2025-04-15 10:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'Santa Misa en honor al Señor del Huerto y confesiones',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-16 19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'Degustación de dulces tradicionales del barrio Iskuchaka - San Sebastián. (Lugar: Atrio de la parroquia)',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-17 16:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Celebración de la Institución Eucarística y lavado de pies de los Apóstoles',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-17 18:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Adoración al Santísimo Sacramento con participación de toda la feligresía y grupos eclesiales de la parroquia',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-17 19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'Vía crucis en la nueva Capilla "Niño Jesús Héroes del Cenepa" Pichiwpampa',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-18 10:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Celebración de la Pasión del Señor y veneración de la Santísima Cruz en la Parroquia San Sebastián',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-18 17:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'Vigilia Pascual, bendición del fuego y del agua, Misa solemne de Pascua de Resurrección',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-19 19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'DOMINGO PASCUA DE RESURRECCIÓN',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-20 07:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'DOMINGO PASCUA DE RESURRECCIÓN',
+      latitud: -9.936142796208651, 
+      longitud: -76.2448795480231,
+      fecha_hora: '2025-04-20 19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 2,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+    {
+      nombre: 'escenificación de la vida pasión, y muerte de nuestro señor Jesucristo',
+      latitud: -9.82625824152159, 
+      longitud: -76.80141855764403,
+      fecha_hora: '2025-04-18 09:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 3,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+       
+
   ]);
 };
