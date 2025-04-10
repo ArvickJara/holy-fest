@@ -5,7 +5,8 @@ exports.up = function (knex) {
     table.text('descripcion').nullable();
     table.decimal('latitud', 10, 7).nullable();
     table.decimal('longitud', 10, 7).nullable();
-    table.datetime('fecha_hora').notNullable();
+    table.date('fecha').notNullable();
+    table.time('hora').notNullable();
     table.json('imagenes').nullable();
     table.integer('organizacion_id').unsigned().nullable();
     table.foreign('organizacion_id').references('id').inTable('organizacion').onDelete('SET NULL');
