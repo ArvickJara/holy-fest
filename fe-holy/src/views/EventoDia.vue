@@ -5,7 +5,22 @@
       <img :src="obtenerImagenDia()" :alt="nombreDia" class="header-image">
     </div>
 
-
+    <div class="filter-container">
+      <span class="filter-label">Filtrar por tipo:</span>
+      <div class="filter-options">
+        <button class="filter-button" :class="{ active: tipoFiltro === 'todos' }" @click="filtrarPorTipo('todos')">
+          Todos
+        </button>
+        <button class="filter-button" :class="{ active: tipoFiltro === 'Municipal' }"
+          @click="filtrarPorTipo('Municipal')">
+          Municipalidad
+        </button>
+        <button class="filter-button" :class="{ active: tipoFiltro === 'Parroquial' }"
+          @click="filtrarPorTipo('Parroquial')">
+          Parroquial
+        </button>
+      </div>
+    </div>
 
     <!-- Estado de carga -->
     <div v-if="loading" class="loading-state">
