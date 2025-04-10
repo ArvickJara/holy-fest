@@ -82,7 +82,7 @@ export default {
     async cargarOrganizaciones() {
       try {
         console.log('Iniciando carga de organizaciones...');
-        const response = await axios.get('http://localhost:5000/api/organizacion');
+        const response = await axios.get('https://tusantohcoback.sistemasudh.com/api/organizacion');
         console.log('Respuesta API organizaciones:', response.data);
 
         // Corregido: accediendo correctamente a response.data.organizaciones
@@ -171,7 +171,7 @@ export default {
         console.log('Organizaciones cargadas, obteniendo eventos...');
 
         // 2. Obtener eventos
-        const response = await axios.get('http://localhost:5000/api/eventos', {
+        const response = await axios.get('https://tusantohcoback.sistemasudh.com/api/eventos', {
           params: { fecha: fecha }
         });
 
