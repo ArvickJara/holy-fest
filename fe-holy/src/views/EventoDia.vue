@@ -44,7 +44,8 @@
       <div v-for="evento in eventos" :key="evento.id" class="evento-card">
         <div class="evento-info">
           <h2 class="evento-titulo">{{ evento.nombre }}</h2>
-          <p class="evento-hora">{{ formatearFechaHora(evento.fecha_hora) }}</p>
+          <!-- Usar el campo hora en lugar de fecha_hora -->
+          <p class="evento-hora">{{ formatearHora(evento.hora) }}</p>
           <p class="evento-organizacion">
             <strong>Organiza:</strong>
             {{ evento.organizacion ? evento.organizacion.nombre : 'Desconocido' }}
@@ -79,10 +80,33 @@ export default {
   },
   methods: {
 
+    formatearHora(hora) {
+      if (!hora) return '';
+
+      try {
+        // Si hora ya viene en formato HH:MM:SS
+        if (typeof hora === 'string' && hora.includes(':')) {
+          // Extraer solo hora y minutos (ignorar segundos)
+          const partes = hora.split(':');
+          return `${partes[0]}:${partes[1]}`;
+        }
+
+        // Si por algún motivo hora es un objeto Date o timestamp
+        const horaObj = new Date(hora);
+        return horaObj.toLocaleTimeString('es-ES', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch (e) {
+        console.error('Error al formatear hora:', e);
+        return hora; // Devolver el valor original si hay error
+      }
+    },
+
     async cargarOrganizaciones() {
       try {
         console.log('Iniciando carga de organizaciones...');
-        const response = await axios.get('https://tusantohcoback.sistemasudh.com/api/organizacion');
+        const response = await axios.get('http://localhost:5000/api/organizacion');
         console.log('Respuesta API organizaciones:', response.data);
 
         // Corregido: accediendo correctamente a response.data.organizaciones
@@ -146,21 +170,6 @@ export default {
       });
     },
 
-    formatearFechaHora(fechaHora) {
-      if (!fechaHora) return '';
-
-      try {
-        const fecha = new Date(fechaHora);
-        return fecha.toLocaleTimeString('es-ES', {
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-      } catch (e) {
-        console.error('Error al formatear fecha:', e);
-        return fechaHora; // Devolver el valor original si hay error
-      }
-    },
-
     async cargarEventos(fecha) {
       this.loading = true;
       this.error = null;
@@ -168,22 +177,31 @@ export default {
       try {
         // 1. Primero cargar las organizaciones
         await this.cargarOrganizaciones();
-        console.log('Organizaciones cargadas, obteniendo eventos...');
+        console.log('Organizaciones cargadas, obteniendo eventos para fecha:', fecha);
 
         // 2. Obtener eventos
-        const response = await axios.get('https://tusantohcoback.sistemasudh.com/api/eventos', {
-          params: { fecha: fecha }
+        const response = await axios.get('http://localhost:5000/api/eventos', {
+          params: { fecha: fecha, limit: 1000 }
         });
 
         console.log('Respuesta de API eventos:', response.data);
 
-        // Verificar la estructura correcta de la respuesta
+        // Verificar que tenemos eventos
         if (response.data && response.data.eventos && Array.isArray(response.data.eventos)) {
-          // Aquí está el cambio: enriquecer los eventos con la información de la organización
-          this.eventosSinFiltrar = this.enriquecerEventos(response.data.eventos);
-          console.log('Eventos enriquecidos:', this.eventosSinFiltrar.length);
+          console.log(`Eventos recibidos de la API: ${response.data.eventos.length}`);
 
-          // 3. Aplicar filtro actual
+          // Filtrar por fecha (extrayendo solo la parte YYYY-MM-DD)
+          const eventosFiltradosPorFecha = response.data.eventos.filter(evento => {
+            const fechaEvento = evento.fecha.split('T')[0];
+            console.log(`Comparando: ${fechaEvento} con ${fecha}`);
+            return fechaEvento === fecha;
+          });
+
+          console.log(`Eventos filtrados para fecha ${fecha}: ${eventosFiltradosPorFecha.length}`);
+
+          this.eventosSinFiltrar = this.enriquecerEventos(eventosFiltradosPorFecha);
+
+          // 3. Aplicar filtro de tipo de organización
           this.filtrarPorTipo(this.tipoFiltro);
         } else {
           this.eventosSinFiltrar = [];
@@ -234,6 +252,8 @@ export default {
   mounted() {
     const route = useRoute();
     const semana = route.params.semanas;
+
+    console.log(`Parámetro de ruta recibido: ${semana}`);
 
     const fechas = {
       'domingo-ramos': '2025-04-13',

@@ -41,6 +41,7 @@ const upload = multer({
   }
 });
 
+// Actualizado: ahora usa los campos fecha y hora separados
 const applyFilters = (query, filters) => {
   const { nombre, descripcion, fecha_desde, fecha_hasta, organizacion_id } = filters;
 
@@ -51,10 +52,10 @@ const applyFilters = (query, filters) => {
     query = query.where('descripcion', 'like', `%${descripcion}%`);
   }
   if (fecha_desde) {
-    query = query.where('fecha_hora', '>=', fecha_desde);
+    query = query.where('fecha', '>=', fecha_desde);
   }
   if (fecha_hasta) {
-    query = query.where('fecha_hora', '<=', fecha_hasta);
+    query = query.where('fecha', '<=', fecha_hasta);
   }
   if (organizacion_id) {
     query = query.where('organizacion_id', organizacion_id);
@@ -63,11 +64,13 @@ const applyFilters = (query, filters) => {
   return query;
 };
 
+// Actualizado: ahora usa fecha y hora separados
 router.get('/list', async (req, res) => {
   try {
     const eventos = await knex('eventos')
-      .select('id', 'nombre', 'fecha_hora')
-      .orderBy('fecha_hora', 'desc');
+      .select('id', 'nombre', 'fecha', 'hora')
+      .orderBy('fecha', 'desc')
+      .orderBy('hora', 'asc');
 
     res.status(200).json(eventos);
   } catch (err) {
@@ -78,8 +81,14 @@ router.get('/list', async (req, res) => {
   }
 });
 
+// Actualizado: Filtrado por fecha
 router.get('/', async (req, res) => {
-  let { nombre, descripcion, fecha_desde, fecha_hasta, organizacion_id, page = 1, limit = 10 } = req.query;
+  let {
+    nombre, descripcion,
+    fecha, // Nuevo: ahora aceptamos fecha directa
+    fecha_desde, fecha_hasta,
+    organizacion_id, page = 1, limit = 10
+  } = req.query;
 
   page = parseInt(page, 10);
   if (isNaN(page) || page < 1) {
@@ -97,8 +106,8 @@ router.get('/', async (req, res) => {
     const filters = {
       nombre,
       descripcion,
-      fecha_desde,
-      fecha_hasta,
+      fecha_desde: fecha || fecha_desde, // Si se proporciona fecha, se usa como fecha_desde
+      fecha_hasta: fecha || fecha_hasta, // También como fecha_hasta para buscar ese día exacto
       organizacion_id: organizacion_id ? parseInt(organizacion_id) : null
     };
 
@@ -111,7 +120,8 @@ router.get('/', async (req, res) => {
     let dataQuery = knex('eventos')
       .select('eventos.*', 'organizacion.nombre as organizacion_nombre')
       .leftJoin('organizacion', 'eventos.organizacion_id', 'organizacion.id')
-      .orderBy('eventos.id', 'desc');
+      .orderBy('eventos.fecha', 'asc')
+      .orderBy('eventos.hora', 'asc');
 
     dataQuery = applyFilters(dataQuery, filters);
     dataQuery = dataQuery.limit(limit).offset(offset);
@@ -120,6 +130,9 @@ router.get('/', async (req, res) => {
 
     // Convertir el campo imágenes de JSON string a objeto
     const eventosFormateados = eventos.map(evento => {
+      if (evento.fecha) {
+        evento.fecha = evento.fecha.split('T')[0];
+      }
       if (typeof evento.imagenes === 'string') {
         try {
           const imagenLimpia = evento.imagenes.replace(/\\/g, '');
@@ -219,15 +232,17 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Actualizado: para usar campos fecha y hora separados
 router.post('/', async (req, res) => {
-  const { nombre, descripcion, latitud, longitud, fecha_hora, organizacion_id } = req.body;
+  const { nombre, descripcion, latitud, longitud, fecha, hora, organizacion_id } = req.body;
   try {
     const result = await knex('eventos').insert({
       nombre,
       descripcion,
       latitud,
       longitud,
-      fecha_hora,
+      fecha,
+      hora,
       imagenes: '[]',
       organizacion_id
     });
@@ -240,9 +255,10 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Actualizado: para usar campos fecha y hora separados
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { nombre, descripcion, latitud, longitud, fecha_hora, organizacion_id } = req.body;
+  const { nombre, descripcion, latitud, longitud, fecha, hora, organizacion_id } = req.body;
   try {
     const eventoExistente = await knex('eventos').where('id', id).first();
 
@@ -257,7 +273,8 @@ router.put('/:id', async (req, res) => {
         descripcion,
         latitud,
         longitud,
-        fecha_hora,
+        fecha,
+        hora,
         organizacion_id
       });
 
@@ -267,7 +284,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Ruta para subir imágenes a un evento
+// Las rutas para manejar imágenes permanecen sin cambios
 router.post('/:id/imagenes', upload.array('imagenes', 10), async (req, res) => {
   const { id } = req.params;
 
@@ -325,13 +342,13 @@ router.post('/:id/imagenes', upload.array('imagenes', 10), async (req, res) => {
     // Obtenemos el evento actualizado y aseguramos que las imágenes se retornen correctamente
     const eventoActualizado = await knex('eventos').where('id', id).first();
     let imagenesActualizadas = [];
-    
+
     try {
       if (eventoActualizado.imagenes) {
         if (typeof eventoActualizado.imagenes === 'string') {
           const imagenLimpia = eventoActualizado.imagenes.replace(/\\/g, '');
           imagenesActualizadas = JSON.parse(imagenLimpia);
-          
+
           // Si sigue siendo string después del parseo
           if (typeof imagenesActualizadas === 'string') {
             imagenesActualizadas = JSON.parse(imagenesActualizadas);
@@ -365,7 +382,7 @@ router.post('/:id/imagenes', upload.array('imagenes', 10), async (req, res) => {
   }
 });
 
-// Ruta para eliminar imágenes de un evento
+// La ruta para eliminar imágenes permanece sin cambios
 router.delete('/:id/imagenes', async (req, res) => {
   const { id } = req.params;
   const { imagenes } = req.body;
@@ -395,15 +412,12 @@ router.delete('/:id/imagenes', async (req, res) => {
     }
 
     console.log('Imágenes actuales antes de eliminar:', imagenesActuales);
-    
-    // Corregimos la lógica de filtrado para identificar las imágenes a eliminar
+
     const rutasAEliminar = imagenes;
     const imagenesAEliminar = [];
     const imagenesRestantes = [];
 
-    // Verificar cada imagen actual si debe ser eliminada o conservada
     imagenesActuales.forEach(ruta => {
-      // Comprobar si la ruta actual está en la lista de rutas a eliminar
       if (rutasAEliminar.includes(ruta)) {
         imagenesAEliminar.push(ruta);
       } else {
@@ -414,9 +428,7 @@ router.delete('/:id/imagenes', async (req, res) => {
     console.log('Imágenes a eliminar:', imagenesAEliminar);
     console.log('Imágenes restantes:', imagenesRestantes);
 
-    // Eliminar archivos físicos
     imagenesAEliminar.forEach(ruta => {
-      // Eliminar slash inicial si existe para la construcción de la ruta
       const rutaSinSlash = ruta.startsWith('/') ? ruta.substring(1) : ruta;
       const rutaCompleta = path.join(__dirname, '..', 'public', rutaSinSlash);
       console.log('Intentando eliminar archivo:', rutaCompleta);
@@ -428,7 +440,6 @@ router.delete('/:id/imagenes', async (req, res) => {
       }
     });
 
-    // Actualizar la lista de imágenes en la base de datos
     await knex('eventos')
       .where('id', id)
       .update({ imagenes: JSON.stringify(imagenesRestantes) });
@@ -443,6 +454,7 @@ router.delete('/:id/imagenes', async (req, res) => {
   }
 });
 
+// La ruta para eliminar eventos permanece sin cambios
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
