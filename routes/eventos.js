@@ -130,9 +130,27 @@ router.get('/', async (req, res) => {
 
     // Convertir el campo imágenes de JSON string a objeto
     const eventosFormateados = eventos.map(evento => {
+
       if (evento.fecha) {
-        evento.fecha = evento.fecha.split('T')[0];
+        if (typeof evento.fecha === 'string') {
+          // Si ya es string, solo extraemos la parte de fecha
+          evento.fecha = evento.fecha.split('T')[0];
+        }
+        else if (evento.fecha instanceof Date) {
+          // Si es un objeto Date, lo convertimos a formato YYYY-MM-DD
+          evento.fecha = evento.fecha.toISOString().split('T')[0];
+        }
+        else {
+          // Para cualquier otro caso, convertimos a string
+          try {
+            evento.fecha = new Date(evento.fecha).toISOString().split('T')[0];
+          } catch (e) {
+            console.warn(`No se pudo formatear fecha para evento ${evento.id}:`, e);
+            evento.fecha = null;
+          }
+        }
       }
+
       if (typeof evento.imagenes === 'string') {
         try {
           const imagenLimpia = evento.imagenes.replace(/\\/g, '');

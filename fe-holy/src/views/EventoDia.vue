@@ -1,5 +1,5 @@
 <template>
-  <div class="eventos-container">
+  <div class="eventos-container" :style="customStyles">
     <!-- Header con imagen -->
     <div class="header-image-container">
       <img :src="obtenerImagenDia()" :alt="nombreDia" class="header-image">
@@ -44,7 +44,6 @@
       <div v-for="evento in eventos" :key="evento.id" class="evento-card">
         <div class="evento-info">
           <h2 class="evento-titulo">{{ evento.nombre }}</h2>
-          <!-- Usar el campo hora en lugar de fecha_hora -->
           <p class="evento-hora">{{ formatearHora(evento.hora) }}</p>
           <p class="evento-organizacion">
             <strong>Organiza:</strong>
@@ -55,6 +54,31 @@
           </p>
           <p class="evento-descripcion">{{ evento.descripcion }}</p>
         </div>
+
+        <!-- Botón del mapa movido aquí, fuera del evento-info -->
+        <button v-if="evento.latitud && evento.longitud" class="map-button" @click="abrirMapa(evento)">
+          <img src="/mapa.png" alt="Ver ubicación" class="map-icon" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal del mapa -->
+  <div v-if="showModal" class="map-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ eventoSeleccionado?.nombre }}</h3>
+        <button class="close-modal" @click="showModal = false">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="400" frameborder="0" style="border:0; border-radius: 4px;"
+          :src="`https://maps.google.com/maps?q=${eventoSeleccionado?.latitud},${eventoSeleccionado?.longitud}&z=15&output=embed`"
+          allowfullscreen></iframe>
+
+        <div class="direccion-info">
+          <p>
+            <strong>Organiza:</strong> {{ eventoSeleccionado?.organizacion?.nombre || 'Desconocido' }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -64,7 +88,59 @@
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 
+
 export default {
+
+  computed: {
+    colorScheme() {
+      // Mapa de colores por día
+      const colorMap = {
+        'Domingo de Ramos': {
+          main: '#095926', // Verde
+          text: 'white'
+        },
+        'Lunes Santo': {
+          main: '#660066', // Púrpura
+          text: 'white'
+        },
+        'Martes Santo': {
+          main: '#660066', // Púrpura
+          text: 'white'
+        },
+        'Miércoles Santo': {
+          main: '#660066', // Púrpura
+          text: 'white'
+        },
+        'Jueves Santo': {
+          main: '#A20C18', // Rojo oscuro
+          text: 'white'
+        },
+        'Viernes Santo': {
+          main: '#A20C18', // Rojo oscuro
+          text: 'white'
+        },
+        'Sábado Santo': {
+          main: '#A20C18', // Rojo oscuro
+          text: 'white'
+        },
+        'Domingo de Resurrección': {
+          main: '#FFFFFF', // Blanco
+          text: 'black'
+        }
+      };
+
+      // Devolver colores para el día actual o colores por defecto
+      return colorMap[this.nombreDia] || { main: '#713532', text: 'white' };
+    },
+
+    customStyles() {
+      return {
+        '--theme-color': this.colorScheme.main,
+        '--theme-text-color': this.colorScheme.text
+      };
+    }
+  },
+
   name: 'EventoDia',
   data() {
     return {
@@ -75,10 +151,27 @@ export default {
       error: null,
       organizaciones: {},
       tipoFiltro: 'todos',
-      fechaSeleccionada: ''
+      fechaSeleccionada: '',
+      showModal: false,
+      eventoSeleccionado: null
     };
   },
   methods: {
+
+    abrirMapa(evento) {
+      if (!evento.latitud || !evento.longitud) {
+        alert('Este evento no tiene coordenadas de ubicación definidas.');
+        return;
+      }
+
+      this.eventoSeleccionado = evento;
+      this.showModal = true;
+    },
+
+    cerrarMapa() {
+      this.showModal = false;
+      this.eventoSeleccionado = null;
+    },
 
     formatearHora(hora) {
       if (!hora) return '';
@@ -245,7 +338,7 @@ export default {
         'Domingo de Resurrección': '/Domingo2.png'
       };
 
-      return imagenesMap[this.nombreDia] || '/Domingo1.png'; // Imagen por defecto
+      return imagenesMap[this.nombreDia]; // Imagen por defecto
     }
 
   },
@@ -289,7 +382,8 @@ export default {
   }
 
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
+    /* Reduce de -10px a -5px para un rebote más sutil */
   }
 }
 
@@ -326,13 +420,13 @@ export default {
 }
 
 .filter-button:hover {
-  background-color: #e0e0e0;
+  background-color: #e4dfdf;
 }
 
 .filter-button.active {
-  background-color: #713532;
-  color: white;
-  border-color: #713532;
+  background-color: var(--theme-color, #713532);
+  color: var(--theme-text-color, white);
+  border-color: var(--theme-color, #713532);
 }
 
 
@@ -395,7 +489,8 @@ export default {
 }
 
 .evento-card {
-  background-color: #fff;
+  position: relative;
+  background-color: var(--theme-color, #cfbcbc);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -408,20 +503,33 @@ export default {
 }
 
 .evento-info {
-  padding: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 25px;
+  /* Pequeño margen para evitar que el texto llegue al botón */
 }
 
 .evento-titulo {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
+  color: var(--theme-text-color, inherit);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
 .evento-hora {
-  font-size: 1.125rem;
+  font-size: 1rem;
+  color: var(--theme-text-color, inherit);
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.evento-organizacion {
+  color: var(--theme-text-color, inherit);
 }
 
 .evento-descripcion {
   font-size: 1rem;
+  color: var(--theme-text-color, inherit);
 }
 
 .nav-links {
@@ -475,5 +583,135 @@ export default {
     text-align: center;
     margin-bottom: 8px;
   }
+}
+
+/* Estilos para el icono del mapa */
+.organizacion-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.map-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  animation: bounce 1.2s ease-in-out infinite;
+  z-index: 5;
+}
+
+/* Estilos para el botón del mapa en línea */
+.inline-map-button {
+  position: absolute;
+  /* Cambiar a posicionamiento absoluto */
+  bottom: 10px;
+  /* Distancia desde abajo */
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  animation: bounce 1.2s ease-in-out infinite;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.inline-map-button:hover {
+  transform: scale(1.1);
+  animation-play-state: paused;
+}
+
+.evento-organizacion {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.map-icon-container:hover {
+  transform: scale(1.1);
+  animation-play-state: paused;
+}
+
+.map-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Estilos para el modal del mapa */
+.map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--theme-color);
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.direccion-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+
+.evento-card {
+  position: relative;
 }
 </style>
