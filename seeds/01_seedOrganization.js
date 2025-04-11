@@ -16,7 +16,7 @@ exports.seed = async function (knex) {
     },
     {
       id: 3,
-      nombre: 'MUNICIPALIDAD PROVINCIAL DOS DE MAYO – HUÁNUCO',
+      nombre: 'Municipalidad Provincial Dos de Mayo – Huánuco',
       descripcion: 'Brindando servicios de calidad, mejorando el nivel de vida y bienestar de la población rural y urbana de la provincia de dos de mayo, con equidad, honestidad lealtad, transparencia y justicia social.',
       tipo: 'Municipal'
     }

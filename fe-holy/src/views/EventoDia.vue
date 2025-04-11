@@ -49,7 +49,7 @@
             <strong>Organiza:</strong>
             {{ evento.organizacion ? evento.organizacion.nombre : 'Desconocido' }}
             <span class="badge" :class="evento.organizacion ? evento.organizacion.tipo.toLowerCase() : ''">
-              {{ evento.organizacion ? evento.organizacion.tipo : 'Sin tipo' }}
+
             </span>
           </p>
           <p class="evento-descripcion">{{ evento.descripcion }}</p>
@@ -199,7 +199,7 @@ export default {
     async cargarOrganizaciones() {
       try {
         console.log('Iniciando carga de organizaciones...');
-        const response = await axios.get('https://tusantohcoback.sistemasudh.com/api/organizacion');
+        const response = await axios.get('http://localhost:5000/api/organizacion');
         console.log('Respuesta API organizaciones:', response.data);
 
         // Corregido: accediendo correctamente a response.data.organizaciones
@@ -273,7 +273,7 @@ export default {
         console.log('Organizaciones cargadas, obteniendo eventos para fecha:', fecha);
 
         // 2. Obtener eventos
-        const response = await axios.get('https://tusantohcoback.sistemasudh.com/api/eventos', {
+        const response = await axios.get('http://localhost:5000/api/eventos', {
           params: { fecha: fecha, limit: 1000 }
         });
 

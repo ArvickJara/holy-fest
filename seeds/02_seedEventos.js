@@ -494,7 +494,7 @@ exports.seed = async function (knex) {
     },
 
     {
-      nombre: 'Escenificación de la vida pasión, y muerte de nuestro señor Jesucristo',
+      nombre: 'Escenificación de la vida, pasión y muerte de nuestro señor Jesucristo',
       latitud: -9.82625824152159,
       longitud: -76.80141855764403,
       fecha: '2025-04-18',
