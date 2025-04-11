@@ -1736,6 +1736,183 @@ exports.seed = async function (knex) {
       created_at: new Date(),
       updated_at: new Date()
     },
+    {
+      nombre: 'Feria artesanal, productiva y turística',
+      latitud: -9.929195506932114,
+      longitud: -76.23995050346383,
+      fecha: '2025-04-19',
+      hora: '10:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Rezo de las laudes de Sábado Santo',
+      latitud: -9.928624499755236,
+      longitud: -76.23952404773594,
+      fecha: '2025-04-19',
+      hora: '07:30:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Acto de piedad de la consolidacíon de la Virgen Madre de Dios',
+      
+      fecha: '2025-04-19',
+  
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Consolidacíon a Nuestra Señora de los Dolores',
+      latitud: -9.931784283700642,  
+      longitud: -76.23964206558074, 
+      fecha: '2025-04-19',
+      hora: '17:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Solemne Vigilia Pascual, Pregón Pascual, Bendicíon del Fuego y Agua',
+      latitud: -9.926850885007806, 
+      longitud: -76.24215039431516, 
+      fecha: '2025-04-19',
+      hora: '19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Solemne Vigilia Pascual, Retorno del Aleluya, Bendicíon del Fuego, Agua y Cirio Pascual',
+      latitud: -9.931859233380175, 
+      longitud: -76.2390876194532, 
+      fecha: '2025-04-19',
+      hora: '19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Gran Solemnidad de la Vigilia Pascual',
+      latitud: -9.928677340517922,
+      longitud: -76.23948113239385, 
+      fecha: '2025-04-19',
+      hora: '20:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Celebracíon con bombardas por La Resurreccíon del Señor Jesús',
+      latitud: -9.934507202789447,
+      longitud: -76.2514609998611, 
+      fecha: '2025-04-19',
+      hora: '23:59:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Procesíon del Cristo Resucitado',
+      latitud: -9.926882589638216, 
+      longitud: -76.24249371705196, 
+      fecha: '2025-04-20',
+      hora: '04:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Misa de Aurora de la Pascua del Señor',
+      latitud: -9.928571658984026, 
+      longitud: -76.23954550540701,   
+      fecha: '2025-04-20',
+      hora: '06:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Santa Misa de Pascua',
+      latitud: -9.928635067903103, 
+      longitud: -76.23949186122138,  
+      fecha: '2025-04-20',
+      hora: '19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Misa Templo',
+
+      fecha: '2025-04-20',
+      hora: '07:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Misa Templo',
+
+      fecha: '2025-04-20',
+      hora: '09:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Misa Templo',
+
+      fecha: '2025-04-20',
+      hora: '11:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Misa Templo',
+
+      fecha: '2025-04-20',
+      hora: '16:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Misa Templo',
+
+      fecha: '2025-04-20',
+      hora: '18:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/cultura-1.jpg', 'uploads/eventos/cultura-2.jpg', 'uploads/eventos/cultura-3.jpg']),
+      organizacion_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+
+
+
+
+
+
+
 
   ]);
 };
