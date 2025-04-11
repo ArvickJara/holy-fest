@@ -10,7 +10,7 @@ exports.seed = async function (knex) {
     },
     {
       id: 2,
-      nombre: 'Iglesia san sebastian',
+      nombre: 'Parroquia San Sebastian',
       descripcion: 'Organización dedicada a promover actividades culturales y festivas en la comunidad.',
       tipo: 'Parroquial'
     },
@@ -19,6 +19,30 @@ exports.seed = async function (knex) {
       nombre: 'Municipalidad Provincial Dos de Mayo – Huánuco',
       descripcion: 'Brindando servicios de calidad, mejorando el nivel de vida y bienestar de la población rural y urbana de la provincia de dos de mayo, con equidad, honestidad lealtad, transparencia y justicia social.',
       tipo: 'Municipal'
-    }
+    },
+    {
+      id: 4,
+      nombre: 'Parroquia San Pedro',
+      descripcion: 'Al poco tiempo de haber llegado los misioneros combonianos en 1938 para hacerse cargo de la Parroquia de Pozuzo el Obispo de entonces Mons. Francisco Rubén Berroa les solicitó su colaboración para enseñar en el Seminarios Diocesano San Teodoro.',
+      tipo: 'Parroquial'
+    },
+    {
+      id: 5,
+      nombre: 'Parroquia San Francisco',
+      descripcion: 'Al poco tiempo de haber llegado los misioneros combonianos en 1938 para hacerse cargo de la Parroquia de Pozuzo el Obispo de entonces Mons. Francisco Rubén Berroa les solicitó su colaboración para enseñar en el Seminarios Diocesano San Teodoro.',
+      tipo: 'Parroquial'
+    },
+    {
+      id: 6,
+      nombre: 'Municipalidad Provincial de Huánuco',
+      descripcion: 'Es el máximo Órgano de Gobierno en la Municipalidad Provincial de Huánuco',
+      tipo: 'Municipal'
+    },
+    {
+      id: 7,
+      nombre: 'Municipalidad Distrital de Amarilis',
+      descripcion: 'Es el máximo Órgano de Gobierno en la Municipalidad Provincial de Amarilis',
+      tipo: 'Municipal'
+    },
   ]);
 };
