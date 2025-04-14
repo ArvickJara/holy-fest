@@ -949,7 +949,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confeciones',
+      nombre: 'Misa & Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-14',
@@ -960,7 +960,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confeciones',
+      nombre: 'Misa & Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-14',
@@ -971,7 +971,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confeciones',
+      nombre: 'Misa & Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-15',
@@ -993,7 +993,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confeciones',
+      nombre: 'Misa & Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-15',
@@ -1004,7 +1004,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confeciones',
+      nombre: 'Misa & Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-16',
@@ -1015,7 +1015,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confeciones',
+      nombre: 'Misa & Confesiones',
       descripcion: 'Procesión en Honor al Señor Cauivo y la Virgen Macarena',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
