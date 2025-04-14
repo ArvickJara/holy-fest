@@ -292,6 +292,17 @@ export default {
 
           console.log(`Eventos filtrados para fecha ${fecha}: ${eventosFiltradosPorFecha.length}`);
 
+          eventosFiltradosPorFecha.sort((a, b) => {
+            // Convertir la hora a un formato comparable (horas y minutos)
+            const horaA = a.hora ? a.hora.substring(0, 5) : '00:00';
+            const horaB = b.hora ? b.hora.substring(0, 5) : '00:00';
+
+            // Ordenar ascendentemente (de temprano a tardío)
+            return horaA.localeCompare(horaB);
+          });
+
+          console.log('Eventos ordenados por hora:', eventosFiltradosPorFecha.map(e => e.hora));
+
           this.eventosSinFiltrar = this.enriquecerEventos(eventosFiltradosPorFecha);
 
           // 3. Aplicar filtro de tipo de organización
