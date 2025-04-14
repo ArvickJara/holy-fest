@@ -44,7 +44,7 @@
       <div v-for="evento in eventos" :key="evento.id" class="evento-card">
         <div class="evento-info">
           <h2 class="evento-titulo">{{ evento.nombre }}</h2>
-          <p class="evento-hora">{{ formatearHora(evento.hora) }}</p>
+          <p class="evento-hora">{{ formatearHora(evento.hora) }} h.</p>
           <p class="evento-organizacion">
             <strong>Organiza:</strong>
             {{ evento.organizacion ? evento.organizacion.nombre : 'Desconocido' }}
