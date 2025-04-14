@@ -44,5 +44,11 @@ exports.seed = async function (knex) {
       descripcion: 'Es el máximo Órgano de Gobierno en la Municipalidad Provincial de Amarilis',
       tipo: 'Municipal'
     },
+    {
+      id: 8,
+      nombre: 'Municipalidad Distrital de Santa Maria del Valle',
+      descripcion: 'Es el máximo Órgano de Gobierno en la Municipalidad Provincial de Amarilis',
+      tipo: 'Municipal'
+    },
   ]);
 };
