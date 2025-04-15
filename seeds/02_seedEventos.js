@@ -2169,9 +2169,5 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     
-    
-    
-    
-
   ]);
 };
