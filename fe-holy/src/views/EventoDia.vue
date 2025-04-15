@@ -20,6 +20,17 @@
           Parroquial
         </button>
       </div>
+
+      <!-- Nuevo filtro de organizaciones (visible solo cuando se selecciona un tipo) -->
+      <div class="organizacion-filtro" v-if="tipoFiltro !== 'todos' && organizacionesFiltradas.length > 0">
+        <span class="filter-label">Organización:</span>
+        <select class="organizacion-select" v-model="organizacionFiltro" @change="aplicarFiltroOrganizacion">
+          <option value="todas">Todas las organizaciones</option>
+          <option v-for="org in organizacionesFiltradas" :key="org.id" :value="org.id">
+            {{ org.nombre }}
+          </option>
+        </select>
+      </div>
     </div>
 
     <!-- Estado de carga -->
@@ -153,7 +164,10 @@ export default {
       tipoFiltro: 'todos',
       fechaSeleccionada: '',
       showModal: false,
-      eventoSeleccionado: null
+      eventoSeleccionado: null,
+      tipoFiltro: 'todos',
+      organizacionFiltro: 'todas',
+      organizacionesFiltradas: [],
     };
   },
   methods: {
@@ -221,28 +235,63 @@ export default {
 
     filtrarPorTipo(tipo) {
       this.tipoFiltro = tipo;
+      // Resetear el filtro de organización cuando se cambia el tipo
+      this.organizacionFiltro = 'todas';
+
       console.log('Filtrando por tipo:', tipo, 'Eventos antes:', this.eventosSinFiltrar.length);
 
-      // Quitar URL incorrecta
+      // Filtrar eventos por tipo
       if (tipo === 'todos') {
         this.eventos = [...this.eventosSinFiltrar];
+        this.organizacionesFiltradas = []; // No mostrar filtro de organizaciones
       } else {
-        // Modificado: ahora verifica si el objeto organizaciones tiene la entrada correspondiente
+        // Filtrar eventos por tipo
         this.eventos = this.eventosSinFiltrar.filter(evento => {
           const org_id = evento.organizacion_id;
           const organizacion = this.organizaciones[org_id];
-
-          console.log(`Evento ${evento.id}: ${evento.nombre}`,
-            `Org ID: ${org_id}`,
-            `Org encontrada: ${!!organizacion}`,
-            organizacion ? `Tipo: ${organizacion.tipo}` : 'Tipo desconocido');
-
-          // Quitar URL incorrecta
           return organizacion && organizacion.tipo === tipo;
         });
+
+        // Generar lista de organizaciones disponibles para este tipo
+        const orgIds = new Set(); // Usar Set para evitar duplicados
+        this.eventos.forEach(evento => {
+          if (evento.organizacion && evento.organizacion.id) {
+            orgIds.add(evento.organizacion.id);
+          }
+        });
+
+        // Convertir a array de objetos de organizaciones
+        this.organizacionesFiltradas = Array.from(orgIds).map(id => this.organizaciones[id])
+          .filter(Boolean) // Eliminar posibles valores undefined
+          .sort((a, b) => a.nombre.localeCompare(b.nombre)); // Ordenar por nombre
       }
 
       console.log('Eventos filtrados:', this.eventos.length);
+      console.log('Organizaciones disponibles:', this.organizacionesFiltradas.length);
+    },
+
+    aplicarFiltroOrganizacion() {
+      // Si se selecciona "todas", mostrar todos los eventos del tipo actual
+      if (this.organizacionFiltro === 'todas') {
+        this.filtrarPorTipo(this.tipoFiltro); // Re-aplicar el filtro por tipo
+        return;
+      }
+
+      // Filtrar eventos por organización específica
+      const orgId = parseInt(this.organizacionFiltro, 10); // Convertir a número
+
+      // Empezar con todos los eventos sin filtrar
+      const eventosPorTipo = this.eventosSinFiltrar.filter(evento => {
+        const organizacion = this.organizaciones[evento.organizacion_id];
+        return organizacion && organizacion.tipo === this.tipoFiltro;
+      });
+
+      // Aplicar filtro de organización específica
+      this.eventos = eventosPorTipo.filter(evento =>
+        evento.organizacion_id === orgId
+      );
+
+      console.log(`Filtrado por organización ID: ${orgId}. Eventos: ${this.eventos.length}`);
     },
 
     enriquecerEventos(eventos) {
@@ -385,6 +434,31 @@ export default {
 
 
 <style scoped>
+.organizacion-filtro {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  justify-content: center;
+  width: 100%;
+}
+
+.organizacion-select {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background-color: white;
+  min-width: 220px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #333;
+  outline: none;
+}
+
+.organizacion-select:focus {
+  border-color: var(--theme-color);
+  box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+}
+
 @keyframes bounce {
 
   0%,
@@ -419,6 +493,8 @@ export default {
   gap: 8px;
   margin-right: nowrap;
 }
+
+
 
 .filter-button {
   background-color: #f5f5f5;
@@ -506,6 +582,7 @@ export default {
   overflow: hidden;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  padding: 15px;
 }
 
 .evento-card:hover {
@@ -724,5 +801,47 @@ export default {
 
 .evento-card {
   position: relative;
+}
+
+@media (max-width: 480px) {
+
+  /* Estilos existentes para móviles */
+  .filter-container {
+    justify-content: center;
+  }
+
+  .filter-options {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  /* NUEVO: Estilos para el filtro de organizaciones en móviles */
+  .organizacion-filtro {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .organizacion-select {
+    min-width: unset;
+    /* Eliminar el ancho mínimo fijo */
+    width: 100%;
+    /* Ocupar todo el ancho disponible */
+    max-width: 280px;
+    /* Limitar el ancho máximo */
+    font-size: 0.85rem;
+    /* Texto ligeramente más pequeño */
+    padding: 8px 10px;
+    /* Padding más compacto */
+  }
+
+  /* Para asegurar que el selector de opciones se ajuste a la pantalla */
+  .organizacion-select option {
+    white-space: normal;
+    /* Permitir que el texto se envuelva */
+    padding: 5px;
+  }
 }
 </style>
