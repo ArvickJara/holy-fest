@@ -50,5 +50,11 @@ exports.seed = async function (knex) {
       descripcion: 'Es el máximo Órgano de Gobierno en la Municipalidad Provincial de Amarilis',
       tipo: 'Municipal'
     },
+    {
+      id: 9,
+      nombre: 'Municipalidad Distrital de Ambo',
+      descripcion: 'Es el máximo Órgano de Gobierno en la Municipalidad Provincial de Ambo',
+      tipo: 'Municipal'
+    },
   ]);
 };

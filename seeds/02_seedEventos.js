@@ -2047,6 +2047,129 @@ exports.seed = async function (knex) {
       created_at: new Date(),
       updated_at: new Date()
     },
+    {
+      nombre: 'Bendición y Distribución de Palmas Procesión Imagen Domingo de Ramos a la Iglesia Matriz ',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-13',
+      hora: '15:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Santa Misa Entrada Triunfal de Jesús',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-13',
+      hora: '17:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Santa Misa',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-14',
+      hora: '19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Santa Misa en Honor a Jesús Cautivo',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-15',
+      hora: '19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Santa Misa en Honor a Jesús Nazareno ',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-16',
+      hora: '19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Lavatorio de los pies Institución de la Eucaristía Adoración al Santísimo',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-17',
+      hora: '19:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Vía Crucis de la Aurora ',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-18',
+      hora: '06:30:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'LITURGIA DE LA PALABRA Sermón de las 7 palabras de Jesús Declaración y Adoración de la Imagen de Jesús ',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-18',
+      hora: '18:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'VIGILIA PASCUAL ',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-19',
+      hora: '18:30:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'PROCESIÓN CRISTO RESUCITADO Y LA VIRGEN MARIA ',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-20',
+      hora: '05:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      nombre: 'Santa misa de PASCUA DE RESURRECCIÓN ',
+      latitud: -10.125930681781075,
+      longitud: -76.20456735094626,
+      fecha: '2025-04-20',
+      hora: '06:00:00',
+      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
+      organizacion_id: 9,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    
+    
     
     
 
