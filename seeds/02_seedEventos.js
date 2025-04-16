@@ -84,7 +84,7 @@ exports.seed = async function (knex) {
     },
 
     {
-      nombre: 'Caravana Pesquera Consumamos Pescado" organizado por el Gobierno regional de Huánuco',
+      nombre: 'Caravana Pesquera "Consumamos Pescado", organizado por el Gobierno Regional de Huánuco.',
       latitud: -9.920996241825447,
       longitud: -76.24143842834785,
       fecha: '2025-04-07',
@@ -95,7 +95,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Caravana Pesquera Consumamos Pescado" organizado por el Gobierno regional de Huánuco',
+      nombre: 'Caravana Pesquera "Consumamos Pescado2, organizado por el Gobierno Regional de Huánuco.',
       latitud: -9.920996241825447,
       longitud: -76.24143842834785,
       fecha: '2025-04-15',
@@ -252,7 +252,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Visita y promoción a la escenificación del viacrucis en la Ermita Las Pampas',
+      nombre: 'Visita y promoción a la escenificación del Vía Crucis en la Ermita Las Pampas',
       latitud: -10.048924980626703,
       longitud: -76.21848156984973,
       fecha: '2025-04-18',
@@ -274,7 +274,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Vía Crusis en la nueva Capilla "Niño Jesús Héroes del Cenepa" - Pichipampa',
+      nombre: 'Vía Crucis en la nueva Capilla "Niño Jesús Héroes del Cenepa" - Pichipampa',
       latitud: -9.924375126288405,
       longitud: -76.23297952491245,
       fecha: '2025-04-18',
@@ -413,7 +413,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Celebración de la Institución Eucarística y lavado de pies de los Apóstoles',
+      nombre: 'Celebración de la institución de la Eucaristía. Lavado de pies. Adoración Eucarística',
       latitud: -9.936142796208651,
       longitud: -76.2448795480231,
       fecha: '2025-04-17',
@@ -608,7 +608,7 @@ exports.seed = async function (knex) {
     //Viernes Santo | 18 de abril
 
     {
-      nombre: 'Viacrucis Parroquial',
+      nombre: 'Vía Crucis Parroquial',
       latitud: -9.931295369201662,
       longitud: -76.24686720542667,
       fecha: '2025-04-18',
@@ -726,19 +726,6 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
 
-    //Miércoles Santo | 16 de abril
-
-    {
-      nombre: 'Confesiones',
-      latitud: -9.931295369201662,
-      longitud: -76.24686720542667,
-      fecha: '2025-04-16',
-      hora: '16:00:00',
-      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
-      organizacion_id: 4,
-      created_at: new Date(),
-      updated_at: new Date()
-    },
 
     //Jueves Santo | 17 de abril, Misa y Adoración Eucarística
 
@@ -780,17 +767,7 @@ exports.seed = async function (knex) {
 
     //Viernes Santo | 18 de abril - Sede Central
 
-    {
-      nombre: 'Viacrucis Parroquial',
-      latitud: -9.931295369201662,
-      longitud: -76.24686720542667,
-      fecha: '2025-04-18',
-      hora: '08:00:00',
-      imagenes: JSON.stringify(['uploads/eventos/municipal-1.jpg', 'uploads/eventos/municipal-2.jpg']),
-      organizacion_id: 4,
-      created_at: new Date(),
-      updated_at: new Date()
-    },
+
 
     {
       nombre: 'Veneración de la Cruz - Liturgia de la pasión',
@@ -949,7 +926,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confesiones',
+      nombre: 'Misa y Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-14',
@@ -960,7 +937,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confesiones',
+      nombre: 'Misa y Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-14',
@@ -971,7 +948,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confesiones',
+      nombre: 'Misa y Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-15',
@@ -993,7 +970,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confesiones',
+      nombre: 'Misa y Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-15',
@@ -1004,7 +981,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confesiones',
+      nombre: 'Misa y Confesiones',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-16',
@@ -1015,7 +992,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa & Confesiones',
+      nombre: 'Misa y Confesiones',
       descripcion: 'Procesión en Honor al Señor Cauivo y la Virgen Macarena',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
@@ -1039,7 +1016,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa en el Templo & lavado de pies',
+      nombre: 'Misa en el Templo y lavado de pies',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-17',
@@ -1050,7 +1027,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa en el Templo & lavado de pies',
+      nombre: 'Misa en el Templo y lavado de pies',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-17',
@@ -1061,7 +1038,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Misa en el Templo & lavado de pies',
+      nombre: 'Misa en el Templo y lavado de pies',
       latitud: -9.926924862486043,
       longitud: -76.24255809009715,
       fecha: '2025-04-17',
@@ -1385,7 +1362,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Reso del Santo Rosario y Confesiones',
+      nombre: 'Rezo del Santo Rosario y Confesiones',
       latitud: -9.931912048281553,
       longitud: -76.23953825102112,
       fecha: '2025-04-15',
@@ -1528,7 +1505,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Degustación de dulces tradicionales del barrio iskuchaka',
+      nombre: 'Degustación de dulces tradicionales del barrio Iskuchaka',
       latitud: -9.93616393203655,
       longitud: -76.24481517480842,
       fecha: '2025-04-17',
@@ -1539,7 +1516,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Celebración de la institución Eucarística y lavado de los Apóstoles',
+      nombre: 'Celebración de la institución Eucarística y lavado de pies',
       latitud: -9.92681915504742,
       longitud: -76.24223624547564,
       fecha: '2025-04-17',
@@ -1872,7 +1849,7 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Peregrinación al Cerro Paucarbamba San Cristóbal - Amarilis Peregrino de Fe y Tradición',
+      nombre: 'Peregrinación al Cerro San Cristóbal - Peregrino de la Fe y Tradición',
       latitud: -9.944469644332827,
       longitud: -76.24241591377145,
       fecha: '2025-04-17',
@@ -1928,7 +1905,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'Bendición y Distribución de Palmas Procesión Imagen Domingo de Ramos a la Iglesia Matriz ',
-      latitud: -9.862867704350126,  
+      latitud: -9.862867704350126,
       longitud: -76.16991274416652,
       fecha: '2025-04-13',
       hora: '15:00:00',
@@ -1939,7 +1916,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'Santa Misa Entrada Triunfal de Jesús ',
-      latitud: -9.862867704350126,  
+      latitud: -9.862867704350126,
       longitud: -76.16991274416652,
       fecha: '2025-04-13',
       hora: '17:00:00',
@@ -1950,7 +1927,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'Santa Misa',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-14',
       hora: '19:00:00',
@@ -1961,7 +1938,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'Santa Misa en Honor a Jesús Cautivo',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-15',
       hora: '19:00:00',
@@ -1972,7 +1949,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'Santa Misa en Honor a Jesús Nazareno ',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-16',
       hora: '19:00:00',
@@ -1982,8 +1959,8 @@ exports.seed = async function (knex) {
       updated_at: new Date()
     },
     {
-      nombre: 'Lavatorio de los pies Institución de la Eucaristía Adoración al Santísimo ',
-      latitud: -9.862878275142405, 
+      nombre: 'Celebración de la institución de la Eucaristía. Lavado de pies. Adoración Eucarística',
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-17',
       hora: '19:00:00',
@@ -1994,7 +1971,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'Vía Crucis de la Aurora ',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-18',
       hora: '06:30:00',
@@ -2005,7 +1982,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'LITURGIA DE LA PALABRA Sermón de las 7 palabras de Jesús Declavación y Adoración de la Imagen de Jesús ',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-18',
       hora: '18:00:00',
@@ -2016,7 +1993,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'VIGILIA PASCUAL ',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-19',
       hora: '18:00:00',
@@ -2027,7 +2004,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'PROCESIÓN CRISTO RESUCITADO Y LA VIRGEN MARIA ',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-20',
       hora: '05:00:00',
@@ -2038,7 +2015,7 @@ exports.seed = async function (knex) {
     },
     {
       nombre: 'Santa misa de PASCUA DE RESURRECCIÓN ',
-      latitud: -9.862878275142405, 
+      latitud: -9.862878275142405,
       longitud: -76.16997711743592,
       fecha: '2025-04-20',
       hora: '06:00:00',
@@ -2168,6 +2145,6 @@ exports.seed = async function (knex) {
       created_at: new Date(),
       updated_at: new Date()
     },
-    
+
   ]);
 };

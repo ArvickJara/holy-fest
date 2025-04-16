@@ -14,9 +14,9 @@
       <div class="footer-logos">
 
 
-        <a href="https://www.visithuanuco.com/" target="_blank" class="logo-link">
+        <!-- <a href="https://www.visithuanuco.com/" target="_blank" class="logo-link">
           <img src="/Visithuanuco.svg" alt="Visita Huánuco" class="footer-logo">
-        </a>
+        </a> -->
 
         <a href="https://udh.sistemasudh.com/carrera/sistemas-e-informatica" target="_blank" class="logo-link">
           <img src="/Logo SistemasUDHconescudo.png" alt="Sistemas UDH" class="footer-logo logo-destacado">
@@ -25,7 +25,7 @@
           <img src="/Huanucoparaelmundo.svg" alt="Huánuco para el mundo" class="footer-logo">
         </a> -->
         <a href="https://www.facebook.com/dircetur.huanuco/?locale=es_LA" target="_blank" class="logo-link">
-          <img src="/Dircetur_huanuco.svg" alt="Dircetur Huánuco" class="footer-logo">
+          <img src="/Dircetur_huanuco.svg" alt="Dircetur Huánuco" class="footer-logo logo-destacado">
         </a>
       </div>
 

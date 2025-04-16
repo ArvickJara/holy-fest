@@ -52,9 +52,9 @@ exports.seed = async function (knex) {
     },
     {
       id: 9,
-      nombre: 'Municipalidad Distrital de Ambo',
+      nombre: 'Parroquia de Ambo',
       descripcion: 'Es el máximo Órgano de Gobierno en la Municipalidad Provincial de Ambo',
-      tipo: 'Municipal'
+      tipo: 'Parroquial'
     },
   ]);
 };
